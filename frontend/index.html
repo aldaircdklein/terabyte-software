@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="fontawesome-free/css/all.css" rel="stylesheet">
+  <title>Terabyte Software</title>
+  <style>
+    body {
+      background-color: #030e45;
+      width: 100vw;
+      height: 100vh;
+      margin:0;
+      background-image: linear-gradient(to bottom right, white 25%, #000 0.5%, #030e45 70%, #000 0.5%, white 80%);
+      background-size: cover;
+      overflow: hidden;
+    }
+    .iconsTam {
+      font-size: 20px;
+    }
+    .alginImage{
+      display: flex;
+      justify-content: center;
+    }
+    .container{
+      background-color: rgba( 000, 000, 000, 0.2);
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      grid-template-rows: auto;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div>
+      <div class="alginImage">
+        <img src="./assets/logo.png" style="width: 200px; border-radius: 5px;">
+      </div>
+      <div class="alginImage">
+        <img src="./assets/loading.gif" style="height: 40px; width: 40px; margin-top: 20px;">
+      </div>
+      <div id="mensagemDeErro" style="margin-top:50px;" class="text-center"></div>
+    </div>
+  </div>
+
+  <div id="verificacao" style="display: none;"></div>
+
+  <script>
+    function mensagemDeErro(msg) {
+      document.getElementById('mensagemDeErro').innerHTML = '<span class="badge badge-danger h5">' + msg + '</span>'
+    };
+  </script>
+  <script>
+    function Verificar(){
+      setTimeout(function () { 
+        document.getElementById('verificacao').innerHTML = `<img src="http://localhost:3000/assets/logo.png" onload="Redirecionar();" onerror="Verificar();" />`;
+      }, 1000);
+    }
+    function Redirecionar(){
+      setTimeout(function () { window.location.href = "./src/app/pages/serial/index.html"; }, 3000);
+    }
+    Verificar();
+  </script>
+
+
+</body>
+
+</html>

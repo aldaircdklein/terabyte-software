@@ -1,0 +1,24 @@
+{
+  "loja": {
+    "msgAuto": "Mensagem de exemplo @name.",
+    "nome": "Loja exemplo",
+    "subtitulo": "Atuação em exemplos",
+    "telefones": "(22)22222-2222/(33) 3333-3333",
+    "email": "lojaxemplo@exemplo.com",
+    "cnpjcpf": "22.222.222/0002-22",
+    "endereco": "Rua exemplo, s/n, bairro exemplo, cidade exemplo/EE"
+  },
+  "computerModel": {
+    "list": [
+      "Dell",
+      "Dell - Vostro",
+      "HP",
+      "Impressora HP3355"
+    ]
+  },
+  "license": {
+    "key": "2d088de0",
+    "validation": 1,
+    "checkDate": "19"
+  }
+}
