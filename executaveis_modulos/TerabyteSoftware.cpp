@@ -3,7 +3,7 @@
 
 int main(){
 
-	system("cd C:\\powermotor-x64\\frontend && yarn start");
+	system("cd C:\\terabytesoftware-x64\\frontend && yarn start");
 	
 	return 0;
 }

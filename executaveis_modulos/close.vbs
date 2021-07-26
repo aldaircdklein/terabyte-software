@@ -5,7 +5,7 @@ set objWMIService = GetObject("winmgmts:" _
 	& "{impersonationLevel=impersonate}!\\" & strComputer & "\root\cimv2")
 
 set colProcesses=objWMIService.ExecQuery _
-	("Select * from Win32_Process Where Name = 'PowerMotor.exe'")
+	("Select * from Win32_Process Where Name = 'TerabyteSoftware.exe'")
 
 set colProcesses1=objWMIService.ExecQuery _
 	("Select * from Win32_Process Where Name = 'node.exe'")
