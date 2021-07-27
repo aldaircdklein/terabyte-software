@@ -6,6 +6,7 @@ import {
 } from '../../../../error/index';
 import {
     ValidationDados,
+    GerarImpressao
 } from '../../../../util/index';
 import {
     useAlert,
@@ -14,8 +15,14 @@ import {
 } from '../../../../util/contexts/index';
 import {
     SalvarDados,
-    CarregarDados
+    CarregarDados,
+    BuscarProducts
 } from './service';
+import {
+    FolhaEtiqueta,
+    FolhaEstoque
+} from '../folha_impressao/index';
+
 
 export const useTelaConfiguracao = () => {
     const [msgAuto, setMsgAuto] = useState('');
@@ -83,6 +90,13 @@ export const useTelaConfiguracao = () => {
     const ModificationShowModal2 = (status) => {
         setOnShowModal2(status);
     }
+    const BuscarTodoOsProdutos = async () => {
+        const dado = await BuscarProducts();
+        GerarImpressao(FolhaEstoque(dado));
+    }
+    const GerarEtiquetas = () => {
+        GerarImpressao(FolhaEtiqueta());
+    }
 
     useEffect(()=>{
         async function init(){
@@ -126,7 +140,9 @@ export const useTelaConfiguracao = () => {
         PreencherEndereco,
         modalConfirmation,
         ModificationModalConfirmation,
-        ModificationShowModal2
+        ModificationShowModal2,
+        BuscarTodoOsProdutos,
+        GerarEtiquetas
     ]
 
 }

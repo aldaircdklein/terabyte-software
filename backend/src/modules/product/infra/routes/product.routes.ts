@@ -4,6 +4,7 @@ import ProductController from '../controllers/ProductController';
 const productController = new ProductController();
 const productRoute = Router();
 
+productRoute.get('/', productController.index);
 productRoute.get('/:code', productController.show);
 productRoute.post('/', productController.store);
 productRoute.put('/:productId', productController.update);

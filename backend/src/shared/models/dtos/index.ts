@@ -13,5 +13,6 @@ export enum PaymentType {
   PIX = 'pix',
   TRANSFER = 'transfer',
   ON_CREDIT = 'onCredit',
+  CANCEL = 'cancel'
 }
 export { IComputer, IUser, IServiceOrder, IProduct, ISold };

@@ -10,13 +10,9 @@ import {
     Span
 } from './style';
 import {Icons} from '../../../../icons/index';
-import {
-    Colors,
-    GerarImpressao
-} from '../../../../util/index';
+import {Colors} from '../../../../util/index';
 import {useTelaConfiguracao} from './action';
 import {ModalConfirmation} from '../../../../components/index';
-import {FolhaEtiqueta} from '../folha_impressao/index';
 
 export const TelaConfiguracao = () => {
     const [
@@ -38,7 +34,9 @@ export const TelaConfiguracao = () => {
         PreencherEndereco,
         modalConfirmation,
         ModificationModalConfirmation,
-        ModificationShowModal2
+        ModificationShowModal2,
+        BuscarTodoOsProdutos,
+        GerarEtiquetas
     ] = useTelaConfiguracao();
 
     return (
@@ -74,7 +72,8 @@ export const TelaConfiguracao = () => {
                     </FormRow>
                     <GrupButton>
                         <ButtonAction color={Colors().white} bgcolor={Colors().primary} onClick={()=>{ModificationModalConfirmation('cadastrar'); ModificationShowModal2(true)}}>{Icons().FaSave} Salvar</ButtonAction>
-                        <ButtonAction color={Colors().white} bgcolor={Colors().success} onClick={()=>{GerarImpressao(FolhaEtiqueta())}}>{Icons().FaPrint} Etiqueta</ButtonAction>
+                        <ButtonAction color={Colors().white} bgcolor={Colors().success} onClick={()=>{GerarEtiquetas()}}>{Icons().FaPrint} Etiqueta</ButtonAction>
+                        <ButtonAction color={Colors().white} bgcolor={Colors().success} onClick={()=>{BuscarTodoOsProdutos()}}>{Icons().FaPrint} Estoque</ButtonAction>
                     </GrupButton>
                 </ShadowBox>
             </FormContainer>

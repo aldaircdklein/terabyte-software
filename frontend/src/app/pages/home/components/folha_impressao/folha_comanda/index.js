@@ -63,12 +63,12 @@ export const FolhaComanda = (dados) => {
                             <span>Telefone: ${dados.cliente.phone}</span>
                             <hr>
                         </div>
-                        <p><strong>*Voltagem:</strong> ${dados.servico.voltage}  <strong>*Backup:</strong> ${dados.servico.backup}</p>
+                        <p><strong>*Voltagem:</strong> ${dados.servico.voltage}  <strong>*Backup:</strong> ${dados.servico.backup? 'Sim':'Não'}</p>
                         <p><strong>*Senha:</strong> ${dados.servico.password}</p>
                         <p><strong>*Problema:</strong> ${dados.servico.problemDescription}</p>
-                        <p><strong>*Bolsa:</strong> ${dados.servico.handbag}</p>
-                        <p><strong>*Carregador:</strong> ${dados.servico.energySource}  <strong>*Quebrado:</strong> ${dados.servico.broken}</p>
-                        <p><strong>*Aberto:</strong> ${dados.servico.open}  <strong>*Parafuso Faltante:</strong> ${dados.servico.missingScrew}</p>
+                        <p><strong>*Bolsa:</strong> ${dados.servico.handbag? 'Sim':'Não'}</p>
+                        <p><strong>*Carregador:</strong> ${dados.servico.energySource}  <strong>*Quebrado:</strong> ${dados.servico.broken? 'Sim':'Não'}</p>
+                        <p><strong>*Aberto:</strong> ${dados.servico.open? 'Sim':'Não'}  <strong>*Parafuso Faltante:</strong> ${dados.servico.missingScrew? 'Sim':'Não'}</p>
                         <p><strong>*Obsevação:</strong> ${dados.servico.observation}</p>
                     </div>
                 </div>
@@ -86,12 +86,12 @@ export const FolhaComanda = (dados) => {
                             <span>Telefone: ${dados.cliente.phone}</span>
                             <hr>
                         </div>
-                        <p><strong>*Voltagem:</strong> ${dados.servico.voltage}  <strong>*Backup:</strong> ${dados.servico.backup}</p>
+                        <p><strong>*Voltagem:</strong> ${dados.servico.voltage}  <strong>*Backup:</strong> ${dados.servico.backup? 'Sim':'Não'}</p>
                         <p><strong>*Senha:</strong> ${dados.servico.password}</p>
                         <p><strong>*Problema:</strong> ${dados.servico.problemDescription}</p>
-                        <p><strong>*Bolsa:</strong> ${dados.servico.handbag}</p>
-                        <p><strong>*Carregador:</strong> ${dados.servico.energySource}  <strong>*Quebrado:</strong> ${dados.servico.broken}</p>
-                        <p><strong>*Aberto:</strong> ${dados.servico.open}  <strong>*Parafuso Faltante:</strong> ${dados.servico.missingScrew}</p>
+                        <p><strong>*Bolsa:</strong> ${dados.servico.handbag? 'Sim':'Não'}</p>
+                        <p><strong>*Carregador:</strong> ${dados.servico.energySource? 'Sim':'Não'}  <strong>*Quebrado:</strong> ${dados.servico.broken? 'Sim':'Não'}</p>
+                        <p><strong>*Aberto:</strong> ${dados.servico.open? 'Sim':'Não'}  <strong>*Parafuso Faltante:</strong> ${dados.servico.missingScrew? 'Sim':'Não'}</p>
                         <p><strong>*Obsevação:</strong> ${dados.servico.observation}</p>
                     </div>
                 </div>

@@ -29,7 +29,7 @@ export const ListaMenu = () => {
             icon:Icons().FaClock
         },
         {
-            name:'Serviço concluído',
+            name:'Buscar serviço',
             action:listRoutes().serviceConcluidoList,
             icon:Icons().FaCheck
         },

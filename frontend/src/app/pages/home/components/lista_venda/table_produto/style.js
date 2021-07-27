@@ -39,6 +39,7 @@ export const ButtonAction = styled.button.attrs(props => ({
     }
 `
 export const Table = styled.table`
+    opacity: ${props => props.block? 0.3:1};
     width: 100%;
     margin-top: 5vh;
     box-shadow: 0px 0px 15px black;
@@ -79,4 +80,9 @@ export const Input = styled.input`
         outline: 0px;
         border-color: ${Colors().blue};
     }
+`
+export const Bloqueador = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `

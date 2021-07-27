@@ -2,10 +2,22 @@ import CreateProduct from '@modules/product/services/createProduct';
 import UpdateProduct from '@modules/product/services/updateProduct';
 import RemoveProduct from '@modules/product/services/deleteProduct';
 import ListProductByCode from '@modules/product/services/listProductByCode';
+import ListProductAll from '@modules/product/services/listProductAll';
 
 import { NextFunction, Request, Response } from 'express';
 
 export default class ProductController {
+  async index(request: Request, response: Response, next: NextFunction){
+    try {
+      const listProductAll = new ListProductAll();
+
+      const product = await listProductAll.execute();
+
+      return response.status(200).json(product);
+    } catch (error) {
+      next(error);
+    }
+  }
   async show(request: Request, response: Response, next: NextFunction) {
     const { code } = request.params;
     try {
