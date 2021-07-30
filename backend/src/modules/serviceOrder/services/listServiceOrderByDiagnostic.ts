@@ -1,10 +1,8 @@
 import ComputerModel from '@shared/models/ComputerModel';
 import { subDays } from 'date-fns';
 
-export default class ListUnpaid {
-  async execute(startDate: string | Date, endDate: string | Date, paid: boolean) {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
+export default class ListServiceOrderByDiagnostic {
+  async execute(diagnostic: string) {
 
     const computers = await ComputerModel.aggregate()
       .lookup({
@@ -132,8 +130,7 @@ export default class ListUnpaid {
       })
       .unwind({ path: '$serviceOrders', preserveNullAndEmptyArrays: true })
       .match({
-        'serviceOrders.createdAt': { $gte: start, $lte: end },
-        'serviceOrders.paid': paid,
+        'serviceOrders.diagnostic': { $regex: new RegExp(diagnostic), $options: 'i' }
       })
       .group({
         _id: {

@@ -9,6 +9,10 @@ export const ListaServicoConcluidoByCode = async (code) => {
     const result = await api.get(ServeRoutes(code).listServiceByCode);
     return result.data;
 }
+export const ListaServicoConcluidoByDiagnostico = async (dado) => {
+    const result = await api.get(ServeRoutes(dado).listServiceByDiagnostic);
+    return result.data;
+}
 export const DivideDados = (dados) => {
     let cliente = dados.user;
     let servico = dados.serviceOrders;

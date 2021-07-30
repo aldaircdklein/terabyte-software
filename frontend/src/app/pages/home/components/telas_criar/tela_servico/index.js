@@ -139,6 +139,7 @@ export const TelaServico = ({typeRequest}) => {
                                         <option value='pix'>Pix</option>
                                         <option value='check'>Cheque</option>
                                         <option value='onCredit'>Crédito em loja</option>
+                                        <option value='cancel'>Cancelar</option>
                                 </Select>
                                 {
                                     finished?(
@@ -261,7 +262,8 @@ export const TelaServico = ({typeRequest}) => {
                         }
                     </tbody>
                 </Table>
-                <h3>Valor total: R${(parseFloat(valueTotal)).toFixed(2)}</h3>
+                <h4>Subtotal: R${(parseFloat(valueTotal)).toFixed(2)} - Descontos: R${(parseFloat(discount)).toFixed(2)} - Parte paga: R${(parseFloat(partPayment)).toFixed(2)}</h4>
+                <h3>Valor total: R${(parseFloat(valueTotal) - parseFloat(discount) - parseFloat(partPayment)).toFixed(2)}</h3>
                 <GrupButton>
                     {
                         typeRequest === 'cadastrar'?(

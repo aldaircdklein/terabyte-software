@@ -3,7 +3,8 @@ import socketio from 'socket.io-client';
 import {
     ListaServicoConcluido,
     DivideDados,
-    ListaServicoConcluidoByCode
+    ListaServicoConcluidoByCode,
+    ListaServicoConcluidoByDiagnostico
 } from './service'
 import {
     useCliente,
@@ -44,6 +45,23 @@ export const useListServicoConcluido = () => {
             if(ValidationDados([busca]) || dado){
                 await showLoarding();
                 const newLista = await ListaServicoConcluidoByCode(dado? dado:busca);
+                setListConcluido(newLista);
+            }else{
+                setValidation(true);
+                addAlert(generationWarning('003-C'));
+            }   
+        } catch (error) {
+            addAlert(generationError('002-B'));
+        }finally{
+            await hiddeLoarding();
+        }
+    }
+
+    const BuscarDignostico = async () => {
+        try {
+            if(ValidationDados([busca])){
+                await showLoarding();
+                const newLista = await ListaServicoConcluidoByDiagnostico(busca);
                 setListConcluido(newLista);
             }else{
                 setValidation(true);
@@ -101,6 +119,7 @@ export const useListServicoConcluido = () => {
         PreencherBusca,
         listConcluido,
         validation,
-        busca
+        busca,
+        BuscarDignostico
     ]
 }

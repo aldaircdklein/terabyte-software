@@ -46,6 +46,10 @@ export const FolhaComanda = (dados) => {
                     .qrcode{
                         width: 100px;
                     }
+                    .contate{
+                        font-size: 0.6em;
+                        display: flex;
+                    }
                 </style>
             </head>
         <body id="bodyImpressao">
@@ -53,8 +57,12 @@ export const FolhaComanda = (dados) => {
                 <div class="Col">
                     <div class="Content">
                         <h4 style="text-align:center;">${dados.cabecalho.nome? dados.cabecalho.nome:'Indefinido'}</h4>
-                        <img src="${qrcode}" class="qrcode" />
-                        <img src="/./assets/logoprint2.jpg" class="qrcode" />
+                        <div class="contate">
+                            <img src="${qrcode}" class="qrcode" />
+                            <img src="/./assets/logoprint2.jpg" class="qrcode" />
+                            ${dados.cabecalho.telefones? dados.cabecalho.telefones:'Indefinido'}
+                            ${dados.cabecalho.email? dados.cabecalho.email:'Indefinido'}
+                        </div>
                         <hr>
                         <div class="meta">
                             <span>Cliente: ${dados.cliente.name}</span>
@@ -76,8 +84,12 @@ export const FolhaComanda = (dados) => {
                 <div class="Col">
                     <div class="Content">
                         <h4 style="text-align:center;">${dados.cabecalho.nome? dados.cabecalho.nome:'Indefinido'}</h4>
-                        <img src="${qrcode}" class="qrcode" />
-                        <img src="/./assets/logoprint2.jpg" class="qrcode" />
+                        <div class="contate">
+                            <img src="${qrcode}" class="qrcode" />
+                            <img src="/./assets/logoprint2.jpg" class="qrcode" />
+                            ${dados.cabecalho.telefones? dados.cabecalho.telefones:'Indefinido'}
+                            ${dados.cabecalho.email? dados.cabecalho.email:'Indefinido'}
+                        </div>
                         <hr>
                         <div class="meta">
                             <span>Cliente: ${dados.cliente.name}</span>

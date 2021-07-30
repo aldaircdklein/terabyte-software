@@ -82,7 +82,7 @@ export const Input = styled.input`
     }
 `
 export const Bloqueador = styled.div`
-    display: flex;
+    display: block;
     justify-content: center;
     align-items: center;
 `

@@ -6,6 +6,7 @@ const serviceOrderRoute = Router();
 
 serviceOrderRoute.get('/', serviceOrderController.show);
 serviceOrderRoute.get('/listbycode/:code', serviceOrderController.showByCode);
+serviceOrderRoute.get('/listbydiagnostic/:diagnostic', serviceOrderController.showByDiagnostic);
 serviceOrderRoute.get('/unpaid', serviceOrderController.index);
 serviceOrderRoute.post('/', serviceOrderController.store);
 serviceOrderRoute.patch('/:serviceOrderId', serviceOrderController.finish);

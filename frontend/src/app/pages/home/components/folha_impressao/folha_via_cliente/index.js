@@ -81,7 +81,7 @@ export const FolhaViaCliente = (dados) => {
                 </div>
                 <div class="Col">
                     <p>Data entrada:</p>
-                    <p>${dados.servico.startDate? format(parseISO(dados.servico.startDate), 'dd/MM/yyyy HH:mm:ss'):'Indefinido'}</p>
+                    <p>${dados.servico.startDate? format(parseISO(dados.servico.startDate), 'dd/MM/yyyy'):'Indefinido'}</p>
                     <hr/>
                 </div>
             </div>

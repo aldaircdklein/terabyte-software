@@ -12,6 +12,7 @@ export const ServeRoutes = (param) => {
         listServiceStatus:`/service-orders?finished=${param}`,
         listComputer:`/computers/${param}`,
         listServiceByCode:`/service-orders/listbycode/${param}`,
+        listServiceByDiagnostic:`/service-orders/listbydiagnostic/${param}`,
         createSold:`/sold`,
         updateSold:`/sold/${param}`,
         createProduct:`/products`,

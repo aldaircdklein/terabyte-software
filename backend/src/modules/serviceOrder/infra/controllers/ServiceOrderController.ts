@@ -5,17 +5,24 @@ import { NextFunction, Request, Response } from 'express';
 import FinishServiceOrder from '@modules/serviceOrder/services/finishServiceOrder';
 import ListFinish from '@modules/serviceOrder/services/listFinish';
 import ListServiceOrderByCode from '@modules/serviceOrder/services/listServiceOrderByCode';
+import ListServiceOrderByDiagnostic from '@modules/serviceOrder/services/listServiceOrderByDiagnostic';
 import ListUnpaid from '@modules/serviceOrder/services/listUnpaidServiceOrder';
 
 export default class ServiceOrderController {
   async index(request: Request, response: Response, next: NextFunction) {
     try {
-      const { startDate, endDate } = request.query;
+      const { startDate, endDate, paid } = request.query;
 
       const listUnpaid = new ListUnpaid();
+
+      const usePaid = paid !== undefined;
+
+      const paidBoolean = usePaid ? paid === 'true' : undefined;
+
       const result = await listUnpaid.execute(
         String(startDate),
-        String(endDate)
+        String(endDate),
+        paidBoolean
       );
       return response.status(200).json(result);
     } catch (error) {
@@ -42,6 +49,18 @@ export default class ServiceOrderController {
 
       const listServiceOrderByCode = new ListServiceOrderByCode();
       const result = await listServiceOrderByCode.execute(code);
+      return response.status(200).json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async showByDiagnostic(request: Request, response: Response, next: NextFunction) {
+    try {
+      const { diagnostic } = request.params;
+
+      const listServiceOrderByDiagnostic = new ListServiceOrderByDiagnostic();
+      const result = await listServiceOrderByDiagnostic.execute(diagnostic);
       return response.status(200).json(result);
     } catch (error) {
       next(error);

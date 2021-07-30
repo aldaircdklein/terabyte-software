@@ -27,7 +27,7 @@ export const TelaListaServicoPendente = () => {
                                 {Icons().FaWrench} Descrição problema: {element.serviceOrders[0].problemDescription}
                             </strong>
                             <Span>
-                                Data Entrada: {format(parseISO(element.serviceOrders[0].startDate), 'dd/MM/yyyy HH:mm:ss')}
+                                Data Entrada: {format(parseISO(element.serviceOrders[0].createdAt), 'dd/MM/yyyy HH:mm:ss')}
                             </Span>
                             <div>
                                 <p>Código: {element.serviceOrders[0].code}</p>

@@ -46,7 +46,7 @@ export const TableServico = ({listVenda}) => {
                             <Th colSpan="5">Aparelho</Th>
                         </tr>
                         <tr>
-                            <Td>Código: {element.computer.code}</Td>
+                            <Td title={`Código: ${element.computer.code}`}>Código: {FormatString(element.computer.code,15)}</Td>
                             <Td colSpan="4" title={`Modelo: ${element.computer.computerModel}`}>Modelo: {FormatString(element.computer.computerModel,20)}</Td>
                         </tr>
                         {
@@ -107,6 +107,7 @@ export const TableServico = ({listVenda}) => {
                                                 <option value='pix'>Pix</option>
                                                 <option value='check'>Cheque</option>
                                                 <option value='onCredit'>Crédito em loja</option>
+                                                <option value='cancel'>Cancelar</option>
                                             </Select>
                                         </Td>
                                         <Td colSpan="1"><ButtonAction onClick={()=>{Salvar(element2)}} color={Colors().white} bgcolor={Colors().primary} marginTop="8vh">{Icons().FaSave} Salvar</ButtonAction></Td>
