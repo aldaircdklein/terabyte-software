@@ -16,15 +16,17 @@ export const ListClientes = () => {
         listCliente,
         AddCliente,
         validation,
-        PreencherBusca
+        PreencherBusca,
+        BuscarTodos
     ] = useListClientes();
 
     return (
         <>
             <NavBusca>
                 <h3>{Icons().FaUserAlt} Buscar Clientes: </h3>
-                <Input request={validation} placeholder="Nome do cliente" onChange={event => PreencherBusca(event.target.value)}/>
+                <Input autoFocus request={validation} placeholder="Nome do cliente" onChange={event => PreencherBusca(event.target.value)}/>
                 <ButtonBuscar onClick={()=>{Buscar()}}>{Icons().FaSearch} Buscar</ButtonBuscar>
+                <ButtonBuscar onClick={()=>{BuscarTodos()}}>{Icons().FaSearch} Todos</ButtonBuscar>
             </NavBusca>
             <List className="scroll-style">
                 {

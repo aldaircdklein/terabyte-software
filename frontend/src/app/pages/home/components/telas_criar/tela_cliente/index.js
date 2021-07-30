@@ -39,7 +39,7 @@ export const TelaCliente = ({typeRequest}) => {
                 <hr/>
                 <FormRow>
                     <Label>Nome:</Label>
-                    <Input request={validation} placeholder="Nome" onChange={event => PreencherName(event.target.value)} value={name}/>
+                    <Input autoFocus request={validation} placeholder="Nome" onChange={event => PreencherName(event.target.value)} value={name}/>
                 </FormRow>
                 <FormRow>
                     <Label>Telefone:</Label>

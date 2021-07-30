@@ -27,7 +27,7 @@ export const ListComputador = () => {
         <>
             <NavBusca>
                 <h3>{Icons().FaDesktop} Buscar Aparelho: </h3>
-                <Input request={validation} placeholder="Código do computador" onChange={event => PreencherBusca(event.target.value)} value={busca}/>
+                <Input autoFocus request={validation} placeholder="Código do computador" onChange={event => PreencherBusca(event.target.value)} value={busca}/>
                 <ButtonBuscar onClick={()=>{Buscar()}}>{Icons().FaSearch} Buscar</ButtonBuscar>
             </NavBusca>
             <List className="scroll-style">

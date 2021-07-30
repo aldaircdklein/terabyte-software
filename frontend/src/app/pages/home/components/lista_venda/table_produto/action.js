@@ -92,7 +92,7 @@ export const useTableServico = () => {
 
     const ModificationDesconto = (dado, valor) => {
         let newServiceSold = dado.element;
-        newServiceSold.discount = Number(dado.element.discount) + Number(valor);
+        newServiceSold.discount = valor;
 
         let newArray = listVenda.map((element) => {
             if(element._id === dado.element._id){
@@ -106,7 +106,7 @@ export const useTableServico = () => {
 
     const ModificationPartePagamento = (dado, valor) => {
         let newServiceSold = dado.element;
-        newServiceSold.partPayment = Number(dado.element.partPayment) + Number(valor);
+        newServiceSold.partPayment = valor;
 
         let newArray = listVenda.map((element) => {
             if(element._id === dado.element._id){

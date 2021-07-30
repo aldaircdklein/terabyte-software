@@ -50,7 +50,7 @@ export const TelaConfiguracao = () => {
                     </p>
                     <FormRow>
                         <Label>Mensagem_automática:</Label>
-                        <TextArea request={validation} placeholder="Mensagem automática" onChange={event => PreencherMsgAuto(event.target.value)} value={msgAuto}></TextArea>
+                        <TextArea autoFocus request={validation} placeholder="Mensagem automática" onChange={event => PreencherMsgAuto(event.target.value)} value={msgAuto}></TextArea>
                     </FormRow>
                     <FormRow>
                         <Label>Nome_loja:</Label>

@@ -45,6 +45,18 @@ export const useListVenda = () => {
         }
     }
 
+    const BuscarTodos = async () => {
+        try {
+            await showLoarding();
+            const newLista = await ListaVendas({dateStart:undefined,dateEnd:undefined,name,paid,tipo});
+            setListVenda(newLista);   
+        } catch (error) {
+            addAlert(generationError('023-B'));
+        }finally{
+            await hiddeLoarding();
+        }
+    }
+
     const PreencherDateStart = (date) => {
         setDateStart(date);
     }
@@ -83,6 +95,7 @@ export const useListVenda = () => {
         PreencherDateEnd,
         PreencherName,
         PreencherPaid,
-        PreencherTipo
+        PreencherTipo,
+        BuscarTodos
     ]
 }

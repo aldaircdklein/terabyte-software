@@ -1,10 +1,20 @@
 import ListUser from '@modules/user/services/listUser';
+import ListUserAll from '@modules/user/services/listUserAll';
 import RegisterUser from '@modules/user/services/registerUser';
 import RemoveUser from '@modules/user/services/removeUser';
 import UpdateUser from '@modules/user/services/updateUser';
 import { NextFunction, Request, Response } from 'express';
 
 export default class UserController {
+  async index(request: Request, response: Response, next: NextFunction) {
+    try {
+      const listUserServiceAll = new ListUserAll();
+      const users = await listUserServiceAll.execute();
+      return response.status(200).json(users);
+    } catch (error) {
+      next(error);
+    }
+  }
   async show(request: Request, response: Response, next: NextFunction) {
     try {
       const { name } = request.params;

@@ -24,7 +24,7 @@ export const TelaListaServicoConcluido = () => {
         <>
             <NavBusca>
                 <h3>{Icons().FaCheck} Lista serviços concluídos</h3>
-                <Input request={validation} placeholder="código da comanda" onChange={event => PreencherBusca(event.target.value)} value={busca}/>
+                <Input autoFocus request={validation} placeholder="código da comanda" onChange={event => PreencherBusca(event.target.value)} value={busca}/>
                 <ButtonBuscar onClick={()=>{Buscar()}}>{Icons().FaSearch} Buscar</ButtonBuscar>
             </NavBusca>
             <List className="scroll-style">

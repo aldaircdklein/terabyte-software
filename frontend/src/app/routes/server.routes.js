@@ -6,6 +6,7 @@ export const ServeRoutes = (param) => {
 
         //server api
         listUsers:`/users/${param}`,
+        listUsersAll:`/users`,
         listProducts:`/products/${param}`,
         listProductsAll:`/products`,
         listServiceStatus:`/service-orders?finished=${param}`,

@@ -53,7 +53,7 @@ export const TelaComputador = ({typeRequest}) => {
                 <hr/>
                 <FormRow>
                     <Label>Código:</Label>
-                    <Input request={validation} placeholder="Código" onChange={event => PreencherCodigo(event.target.value)} value={code}/>
+                    <Input autoFocus request={validation} placeholder="Código" onChange={event => PreencherCodigo(event.target.value)} value={code}/>
                     <Label>Modelo_do_aparelho:</Label>
                     <Input request={validation} placeholder="Modelo do aparelho" list="listModeloComputer" onChange={event => PreencherModeloComputador(event.target.value)} value={computerModel}/>
                     <datalist id="listModeloComputer">

@@ -11,7 +11,8 @@ import {
 } from './style';
 import {
     Colors,
-    FormatString
+    FormatString,
+    Mask
 } from '../../../../../util/index';
 import {useTableServico} from './action';
 import { format, parseISO } from 'date-fns';
@@ -106,8 +107,8 @@ export const TableProduto = ({listVenda}) => {
                                 <Td colSpan="1"><strong>Pagamento - [<Span2 payment={element.paid}>{element.paid? 'Concluído':'Pendente'}</Span2>]</strong></Td>
                                 <Td colSpan="2">
                                     <p>
-                                        Desconto: R$ <Input placeholder={"Desconto"} onBlur={event => ModificationDesconto({element},event.target.value)} width={'20%'}/>
-                                        Parte paga: R$ <Input placeholder={"Parte já paga"} onBlur={event => ModificationPartePagamento({element},event.target.value)} width={'20%'}/>
+                                        Desconto: R$ <Input placeholder={"Desconto"} onChange={event => ModificationDesconto({element},event.target.value)} value={element.discount} width={'20%'}/>
+                                        Parte paga: R$ <Input placeholder={"Parte já paga"} onChange={event => ModificationPartePagamento({element}, Mask(event.target.value,'money') )} value={element.partPayment} width={'20%'}/>
                                     </p>
                                 </Td>
                                 <Td colSpan="1">

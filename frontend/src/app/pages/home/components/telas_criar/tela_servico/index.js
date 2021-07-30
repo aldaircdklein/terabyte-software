@@ -151,7 +151,7 @@ export const TelaServico = ({typeRequest}) => {
                 </FormRow>
                 <FormRow>
                     <Label>Voltagem:</Label>
-                    <Select onChange={event => PreencherVoltagem(event.target.value)} value={voltage}>
+                    <Select autoFocus onChange={event => PreencherVoltagem(event.target.value)} value={voltage}>
                         <option value='110V'>110V</option>
                         <option value='220V'>220V</option>
                         <option value='Bivolt'>Bivolt</option>

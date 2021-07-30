@@ -15,7 +15,8 @@ import {
 } from '../../../../error/index';
 import { useHistory } from 'react-router-dom';
 import{
-    ListaClientes
+    ListaClientes,
+    ListaClientesTodos
 } from './service';
 
 export const useListClientes = () => {
@@ -45,6 +46,18 @@ export const useListClientes = () => {
         }
     }
 
+    const BuscarTodos = async () => {
+        try {
+            await showLoarding();
+            const newLista = await ListaClientesTodos();
+            setListCliente(newLista);
+        } catch (error) {
+            addAlert(generationError('001-B'));
+        }finally{
+            await hiddeLoarding();
+        }
+    }
+
     const AddCliente = (newCliente) => {
         setCliente(newCliente);
     }
@@ -67,6 +80,7 @@ export const useListClientes = () => {
         listCliente,
         AddCliente,
         validation,
-        PreencherBusca
+        PreencherBusca,
+        BuscarTodos
     ]
 }

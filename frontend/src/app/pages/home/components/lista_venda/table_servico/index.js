@@ -10,7 +10,8 @@ import {
 } from './style';
 import {
     Colors,
-    FormatString
+    FormatString,
+    Mask
 } from '../../../../../util/index';
 import {useTableServico} from './action';
 import { format, parseISO } from 'date-fns';
@@ -92,8 +93,8 @@ export const TableServico = ({listVenda}) => {
                                         <Td colSpan="1"><strong>Pagamento - [<Span2 payment={element2.paid}>{element2.paid? 'Concluído':'Pendente'}</Span2>]</strong></Td>
                                         <Td colSpan="2">
                                             <p>
-                                                Desconto: R$ <Input placeholder={"Desconto"} onBlur={event => ModificationDesconto({element,element2},event.target.value)} width={'20%'}/>
-                                                Parte paga: R$ <Input placeholder={"Parte já paga"} onBlur={event => ModificationPartePagamento({element,element2},event.target.value)} width={'20%'}/>
+                                                Desconto: R$ <Input placeholder={"Desconto"} onChange={event => ModificationDesconto({element,element2}, Mask(event.target.value,'money'))} value={element2.discount} width={'20%'}/>
+                                                Parte paga: R$ <Input placeholder={"Parte já paga"} onChange={event => ModificationPartePagamento({element,element2}, Mask(event.target.value,'money'))} value={element2.partPayment} width={'20%'}/>
                                             </p>
                                         </Td>
                                         <Td colSpan="1">

@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import socketio from 'socket.io-client';
 import { useHistory } from 'react-router-dom';
-import{ListaProdutos} from './service';
+import{
+    ListaProdutos,
+    ListaProdutosTodos
+} from './service';
 import {
     useAlert,
     useTelasCriar,
@@ -45,6 +48,18 @@ export const useListProduto = () => {
         }
     }
 
+    const BuscarTodos = async () => {
+        try {
+            await showLoarding();
+            const newLista = await ListaProdutosTodos();
+            setListProduto(newLista);   
+        } catch (error) {
+            addAlert(generationError('002-B'));
+        }finally{
+            await hiddeLoarding();
+        }
+    }
+
     const AddProduto = (newProduto) => {
         setProduto(newProduto);
     }
@@ -75,6 +90,7 @@ export const useListProduto = () => {
         listProduto,
         validation,
         AddProduto,
-        PreencherBusca
+        PreencherBusca,
+        BuscarTodos
     ]
 }

@@ -17,15 +17,17 @@ export const ListProduto = () => {
         listProduto,
         validation,
         AddProduto,
-        PreencherBusca
+        PreencherBusca,
+        BuscarTodos
     ] = useListProduto();
 
     return (
         <>
             <NavBusca>
                 <h3>{Icons().FaBoxOpen} Buscar produto: </h3>
-                <Input request={validation} placeholder="Nome ou código do produto" onChange={event => PreencherBusca(event.target.value)}/>
+                <Input autoFocus request={validation} placeholder="Nome ou código do produto" onChange={event => PreencherBusca(event.target.value)}/>
                 <ButtonBuscar onClick={()=>{Buscar()}}>{Icons().FaSearch} Buscar</ButtonBuscar>
+                <ButtonBuscar onClick={()=>{BuscarTodos()}}>{Icons().FaSearch} Todos</ButtonBuscar>
             </NavBusca>
             <List className="scroll-style">
                 {

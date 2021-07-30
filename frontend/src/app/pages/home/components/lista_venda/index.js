@@ -22,7 +22,8 @@ export const ListVenda = () => {
         PreencherDateEnd,
         PreencherName,
         PreencherPaid,
-        PreencherTipo
+        PreencherTipo,
+        BuscarTodos
     ] = useListVenda();
 
     return (
@@ -30,10 +31,11 @@ export const ListVenda = () => {
             <NavBusca>
                 <h3 style={{marginRight:'1vw'}}>{Icons().FaFileInvoiceDollar} Buscar vendas: </h3>
                 Início:
-                <Input type="date" request={validation} onChange={event => PreencherDateStart(event.target.value)}/>
+                <Input autoFocus type="date" request={validation} onChange={event => PreencherDateStart(event.target.value)}/>
                 Final:
                 <Input type="date" request={validation} onChange={event => PreencherDateEnd(event.target.value)}/>
                 <ButtonBuscar onClick={()=>{Buscar()}}>{Icons().FaSearch} Buscar</ButtonBuscar>
+                <ButtonBuscar onClick={()=>{BuscarTodos()}}>{Icons().FaSearch} Todos</ButtonBuscar>
             </NavBusca>
             <NavBusca>
                 <h3 style={{marginRight:'1vw'}}>Filtrar: </h3>

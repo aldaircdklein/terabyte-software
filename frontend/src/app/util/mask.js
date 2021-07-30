@@ -43,6 +43,10 @@ const MONEY = (dado) => {
     dado = dado.replace('.', '');
     dado = dado.replace(',', '');
 
+    if(dado.substr(0, 1) === '0'){
+        dado = dado.substr(1);
+    }
+
     if (dado > 99999) {
         money.push(dado.substring(0, dado.length - 5));
         money.push(dado.substring(dado.length - 5, dado.length - 2));
@@ -56,7 +60,7 @@ const MONEY = (dado) => {
         return `${money[0]}.${money[1]}`
     } else if (dado > 0) {
 
-        return `${dado}`
+        return `${(dado/100).toFixed(2)}`
     } else {
         return ''
     }

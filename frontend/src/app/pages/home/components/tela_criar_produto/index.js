@@ -49,7 +49,7 @@ export const TelaProduto = () => {
                     <hr/>
                     <FormRow>
                         <Label>Código:</Label>
-                        <Input request={validation} placeholder="Código" onChange={event => PreencherCode(event.target.value)} value={code}/>
+                        <Input autoFocus request={validation} placeholder="Código" onChange={event => PreencherCode(event.target.value)} value={code}/>
                         <Label>Mínimo_estoque:</Label>
                         <Input request={validation} placeholder="Ao atingir está quantidade será alertado" onChange={event => PreencherMinStock(event.target.value)} value={minStock}/>
                     </FormRow>
