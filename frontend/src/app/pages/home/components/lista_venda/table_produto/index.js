@@ -32,7 +32,7 @@ export const TableProduto = ({listVenda}) => {
             listVenda.map((element) => (
                 <>
                     {
-                        element.serviceOrder? (
+                        !element.serviceOrder? (
                             <Bloqueador>
                                 {
                                     element.paymentType === 'cancel'?(
