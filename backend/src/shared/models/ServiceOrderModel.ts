@@ -64,12 +64,19 @@ const ServiceOrderSchema = new Schema(
       required: false,
     },
     servicePrice: Number,
-
+    
     finished: {
       type: Boolean,
       default: false,
     },
+    out: {
+      type: Boolean,
+      default: false,
+    },
     endDate: {
+      type: Date,
+    },
+    outDate: {
       type: Date,
     },
     paymentType: {

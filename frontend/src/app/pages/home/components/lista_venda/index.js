@@ -39,12 +39,18 @@ export const ListVenda = () => {
             </NavBusca>
             <NavBusca>
                 <h3 style={{marginRight:'1vw'}}>Filtrar: </h3>
+                Ordernar:
+                <Select style={{marginRight:'1vw'}} onChange={event => alert('teste')} value={'data'}>
+                    <option value={'data'}>Data</option>
+                    <option value={'nome'}>Nome</option>
+                    <option value={'valortotal'}>Valor total</option>
+                </Select>
                 Nome/código:
                 <Input disabled={tipo === 'true'} placeholder={"Nome ou código"} onChange={event => PreencherName(event.target.value)} value={name}/>
                 Pagamento:
                 <Select style={{marginRight:'1vw'}} onChange={event => PreencherPaid(event.target.value)} value={paid}>
                     <option value={true}>Pagos</option>
-                    <option value={false}>Crédito em loja</option>
+                    <option value={false}>Não pagos</option>
                 </Select>
                 Tipo:
                 <Select onChange={event => PreencherTipo(event.target.value)} value={tipo}>

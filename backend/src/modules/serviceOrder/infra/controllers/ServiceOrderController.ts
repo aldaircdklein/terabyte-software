@@ -3,6 +3,7 @@ import UpdateServiceOrder from '@modules/serviceOrder/services/updateServiceOrde
 import RemoveServiceOrder from '@modules/serviceOrder/services/removeServiceOrder';
 import { NextFunction, Request, Response } from 'express';
 import FinishServiceOrder from '@modules/serviceOrder/services/finishServiceOrder';
+import OutComputerServiceOrder from '@modules/serviceOrder/services/outComputer';
 import ListFinish from '@modules/serviceOrder/services/listFinish';
 import ListServiceOrderByCode from '@modules/serviceOrder/services/listServiceOrderByCode';
 import ListServiceOrderByDiagnostic from '@modules/serviceOrder/services/listServiceOrderByDiagnostic';
@@ -138,6 +139,20 @@ export default class ServiceOrderController {
       const finishOrderService = new FinishServiceOrder();
 
       const serviceOrder = await finishOrderService.execute(serviceOrderId);
+
+      return response.status(200).json(serviceOrder);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async outComputer(request: Request, response: Response, next: NextFunction) {
+    try {
+      const { serviceOrderId } = request.params;
+
+      const outComputerOrderService = new OutComputerServiceOrder();
+
+      const serviceOrder = await outComputerOrderService.execute(serviceOrderId);
 
       return response.status(200).json(serviceOrder);
     } catch (error) {

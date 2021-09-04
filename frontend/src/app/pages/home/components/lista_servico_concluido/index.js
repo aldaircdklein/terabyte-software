@@ -32,6 +32,10 @@ export const TelaListaServicoConcluido = () => {
                 <ButtonBuscar onClick={()=>{Buscar()}}>{Icons().FaSearch} Buscar código</ButtonBuscar>
                 <ButtonBuscar onClick={()=>{BuscarDignostico()}}>{Icons().FaSearch} Buscar diagnóstico</ButtonBuscar>
             </NavBusca>
+            <NavBusca>
+                <ButtonBuscar >{Icons().FaSearch} Buscar finalizados não entregues</ButtonBuscar>
+                <ButtonBuscar >{Icons().FaSearch} Buscar não executados/cobrados</ButtonBuscar>
+            </NavBusca>
             <List className="scroll-style">
                 {
                     listConcluido.map((element) => (
@@ -43,10 +47,10 @@ export const TelaListaServicoConcluido = () => {
                                 Data Entrada: {format(parseISO(element.serviceOrders[0].createdAt), 'dd/MM/yyyy HH:mm:ss')}
                             </Span>
                             <div>
-                                <p>Código: {element.serviceOrders[0].code}</p>
                                 <p>Descrição problema: {element.serviceOrders[0].problemDescription}</p>
                                 <p>Diagnóstico: {element.serviceOrders[0].diagnostic}</p>
-                                <p>Modelo: {element.computer.computerModel} - Código: {element.computer.code} </p>
+                                <p>Informação de serviço: {element.serviceOrders[0].serviceDescription}</p>
+                                <p>Modelo: {element.computer.computerModel}</p>
                              </div>
                         </Li>
                     ))

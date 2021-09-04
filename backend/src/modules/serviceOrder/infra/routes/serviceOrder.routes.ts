@@ -10,6 +10,7 @@ serviceOrderRoute.get('/listbydiagnostic/:diagnostic', serviceOrderController.sh
 serviceOrderRoute.get('/unpaid', serviceOrderController.index);
 serviceOrderRoute.post('/', serviceOrderController.store);
 serviceOrderRoute.patch('/:serviceOrderId', serviceOrderController.finish);
+serviceOrderRoute.patch('/out/:serviceOrderId', serviceOrderController.outComputer);
 serviceOrderRoute.put('/:serviceOrderId', serviceOrderController.update);
 serviceOrderRoute.delete('/:serviceOrderId', serviceOrderController.delete);
 

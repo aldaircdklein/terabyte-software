@@ -27,11 +27,6 @@ import {Icons} from '../../../../../icons/index';
 
 export const TelaServico = ({typeRequest}) => {
     const [
-        salvarDados,
-        finalizarServico,
-        ReenviarWhatsapp,
-        selecionarServico,
-        resetTelaServico,
         voltage,
         password,
         energySource,
@@ -48,12 +43,25 @@ export const TelaServico = ({typeRequest}) => {
         servicePrice,
         startDate,
         endDate,
+        outDate,
         finished,
+        out,
         validation,
         valueTotal,
         modalConfirmation,
         listServicos,
         listVenda,
+        paid,
+        paymentType,
+        servico,
+        discount,
+        partPayment,
+        salvarDados,
+        finalizarServico,
+        entregarComputador,
+        ReenviarWhatsapp,
+        selecionarServico,
+        resetTelaServico,
         PreencherVoltagem,
         PreencherSenha,
         PreencherFonteEnergia,
@@ -73,12 +81,7 @@ export const TelaServico = ({typeRequest}) => {
         ModificationShowModal,
         ModificationShowModal1,
         ModificationShowModal2,
-        paid,
-        paymentType,
         PreencherPayment,
-        servico,
-        discount,
-        partPayment,
         PreencherDesconto,
         PreencherPartePagamento
     ] = useTelaServico();
@@ -112,20 +115,13 @@ export const TelaServico = ({typeRequest}) => {
                     }
                 </List>
                 <hr/>
+                <FormRow>
                     {
                         typeRequest !== 'cadastrar'?(
                             <FormRow style={{marginTop:'2vh'}}>
                                 <h3>Pagamento - [<Span payment={paid}>{paid? 'Concluído':'Pendente'}</Span>]</h3>
                             </FormRow>
                         ):('')
-                    }
-                <FormRow>
-                    {
-                        finished?(
-                            <h3 style={{textAlign:'center'}}>{Icons().FcApproval} Serviço concluído em {format(parseISO(endDate), 'dd/MM/yyyy HH:mm:ss')} {Icons().FcApproval}</h3>
-                        ):(
-                            <ButtonAction disabled={typeRequest === 'cadastrar'} onClick={()=>{finalizarServico()}} bgcolor={Colors().success} color={Colors().white} style={{marginRight:'5vw'}}>{Icons().FaCheck} Finalizar {Icons().FaWhatsapp}</ButtonAction>
-                        )
                     }
                     {
                         typeRequest !== 'cadastrar'?(
@@ -138,8 +134,8 @@ export const TelaServico = ({typeRequest}) => {
                                         <option value='transfer'>Transferência</option>
                                         <option value='pix'>Pix</option>
                                         <option value='check'>Cheque</option>
-                                        <option value='onCredit'>Crédito em loja</option>
-                                        <option value='cancel'>Cancelar</option>
+                                        <option value='onCredit'>Não pago</option>
+                                        <option value='cancel'>Serviço não executado/cobrado</option>
                                 </Select>
                                 {
                                     finished?(
@@ -148,6 +144,22 @@ export const TelaServico = ({typeRequest}) => {
                                 }
                             </>
                         ):('')
+                    }
+                </FormRow>
+                <FormRow>
+                    {
+                        finished?(
+                            <h3 style={{textAlign:'center'}}>{Icons().FcApproval} Serviço concluído em {format(parseISO(endDate), 'dd/MM/yyyy HH:mm:ss')} {Icons().FcApproval}</h3>
+                        ):(
+                            <ButtonAction disabled={typeRequest === 'cadastrar'} onClick={()=>{finalizarServico()}} bgcolor={Colors().success} color={Colors().white} style={{marginRight:'5vw'}}>{Icons().FaCheck} Finalizar {Icons().FaWhatsapp}</ButtonAction>
+                        )
+                    }
+                    {
+                        out?(
+                            <h3 style={{textAlign:'center'}}>{Icons().FcApproval} Entregue em {format(parseISO(outDate), 'dd/MM/yyyy HH:mm:ss')} {Icons().FcApproval}</h3>
+                        ):(
+                            <ButtonAction disabled={typeRequest === 'cadastrar'} onClick={()=>{entregarComputador()}} bgcolor={Colors().success} color={Colors().white}>{Icons().FaCheck} Entregar </ButtonAction>
+                        )
                     }
                 </FormRow>
                 <FormRow>

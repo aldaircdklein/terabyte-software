@@ -14,14 +14,14 @@ export const ListaMenu = () => {
             icon:Icons().FaSearch
         },
         {
-            name:'Buscar computador',
-            action:listRoutes().computadorList,
-            icon:Icons().FaSearch
-        },
-        {
             name:'Venda produto',
             action:listRoutes().vendaProduct,
             icon:Icons().FaShoppingCart
+        },
+        {
+            name:'Buscar computador',
+            action:listRoutes().computadorList,
+            icon:Icons().FaSearch
         },
         {
             name:'Serviço pendente',
@@ -44,7 +44,7 @@ export const ListaMenu = () => {
             icon:Icons().FaSearch
         },
         {
-            name:'Informações venda',
+            name:'Informações gerais',
             action:listRoutes().vendaList,
             icon:Icons().FaFileInvoiceDollar
         },
@@ -52,6 +52,16 @@ export const ListaMenu = () => {
             name:'Configurações',
             action:listRoutes().configuracao,
             icon:Icons().FaCog
-        },        
+        },
+        {
+            name:'Recados',
+            action:listRoutes().configuracao,
+            icon:Icons().FaEdit
+        },
+        {
+            name:'Whatsapp',
+            action:listRoutes().extrawhatsapp,
+            icon:Icons().FaWhatsapp
+        },
     ]
 }

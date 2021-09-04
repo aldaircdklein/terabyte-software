@@ -55,7 +55,7 @@ export const List = styled.ul`
 export const Li = styled.li`
     display: grid;
     grid-template-columns: auto 25%;
-    background-color: ${Colors().green1};
+    background-color: ${props => props.stock? Colors().green1:Colors().orange1 };
     padding: 2vh;
     border: outset;
     border-radius: 10px;

@@ -1,6 +1,6 @@
 import {api} from '../../../../services/api';
 import {ServeRoutes} from '../../../../routes/server.routes';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 export const ListaVendas = async (dados) => {
     let result = {data:[]};
@@ -21,5 +21,20 @@ export const ListaVendas = async (dados) => {
             result = await api.get(ServeRoutes(`startDate=2019-01-01&endDate=${format(data, 'yyyy-MM-dd')}${dados.name !== ''? '&name='+dados.name:''}${'&paid='+dados.paid}`).listSold);
         }
     }
-    return result.data;
+    return OrdenaArrayByDate(result.data);
+}
+
+const OrdenaArrayByDate = (array) => {
+    array.sort((a,b) => {
+        if(a.serviceOrders){
+            const dataA = Date.parse(format(parseISO(a.serviceOrders[0].createdAt), 'yyyy/MM/dd'))
+            const dataB = Date.parse(format(parseISO(b.serviceOrders[0].createdAt), 'yyyy/MM/dd'))
+            return dataA - dataB;
+        }else{
+            const dataA = Date.parse(format(parseISO(a.createdAt), 'yyyy/MM/dd'))
+            const dataB = Date.parse(format(parseISO(b.createdAt), 'yyyy/MM/dd'))
+            return dataA - dataB;
+        }
+    })
+    return array;
 }

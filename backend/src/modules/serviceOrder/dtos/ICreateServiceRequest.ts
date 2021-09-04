@@ -14,10 +14,12 @@ export default interface ICreateServiceRequest {
   handbag?: boolean;
   startDate: Date;
   endDate?: Date;
+  outDate?: Date;
   problemDescription?: string;
   diagnostic?: string;
   serviceDescription?: string;
   finished?: boolean;
+  out?: boolean;
   servicePrice?: number;
   paymentType: PaymentType;
   paid: boolean;

@@ -23,6 +23,7 @@ export const ServeRoutes = (param) => {
         deleteUpdateComputer:`/computers/${param}`,
         createService:`/service-orders`,
         deleteUpdateService:`/service-orders/${param}`,
+        outComputerService:`/service-orders/out/${param}`,
         listSold:`/sold?${param}`,
         listServiceOrderUnpaid:`/service-orders/unpaid?${param}`
     }

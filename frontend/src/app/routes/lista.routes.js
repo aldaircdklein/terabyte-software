@@ -10,6 +10,7 @@ export const listRoutes = () => {
         vendaProduct:'/venda/produto',
         computadorList:'/listagem/computadores',
         configuracao:'/configuracao',
-        vendaList:'/listagem/venda'
+        vendaList:'/listagem/venda',
+        extrawhatsapp:'/extrawhatsapp'
     }
 }

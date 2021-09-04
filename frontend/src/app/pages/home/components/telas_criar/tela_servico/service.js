@@ -35,6 +35,10 @@ export const FinalizarServico = async (id) => {
     let result = await api.patch(ServeRoutes(id).deleteUpdateService);
     return result;
 }
+export const EntregarServico = async (id) => {
+    let result = await api.patch(ServeRoutes(id).outComputerService);
+    return result;
+}
 export const CadastrarServico = async (dados) => {
     const result = await api.post(ServeRoutes().createService,dados); 
     return result;

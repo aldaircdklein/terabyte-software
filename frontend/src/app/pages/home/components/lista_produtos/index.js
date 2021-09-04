@@ -32,7 +32,7 @@ export const ListProduto = () => {
             <List className="scroll-style">
                 {
                     listProduto.map((element) => (
-                        <Li title={`Descrição: ${element.description}`} key={element._id} onClick={()=>{AddProduto(element)}}> 
+                        <Li stock={element.minStock < element.quantity} title={`Descrição: ${element.description}`} key={element._id} onClick={()=>{AddProduto(element)}}> 
                             <strong>
                                 {Icons().FaBoxOpen} Nome: {FormatString(element.name,50)} - Estoque: {element.quantity}
                             </strong>

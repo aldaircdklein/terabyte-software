@@ -9,6 +9,7 @@ import {TelaConfiguracao} from './tela_configuracao/index';
 import {TelaListaServicoPendente} from './lista_servico_pendente/index';
 import {TelaListaServicoConcluido} from './lista_servico_concluido/index';
 import {ListVenda} from './lista_venda/index';
+import {TelaWhatsapp} from './tela_whatsapp/index';
 
 export {
     AnimationHome,
@@ -21,5 +22,6 @@ export {
     TelaConfiguracao,
     TelaListaServicoPendente,
     TelaListaServicoConcluido,
-    ListVenda
+    ListVenda,
+    TelaWhatsapp
 }

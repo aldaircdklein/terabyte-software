@@ -125,7 +125,7 @@ export const ModalCompra = ({typeRequest}) => {
                                     <option value='transfer'>Transferência</option>
                                     <option value='pix'>Pix</option>
                                     <option value='check'>Cheque</option>
-                                    <option value='onCredit'>Crédito em loja</option>
+                                    <option value='onCredit'>Não pago</option>
                                 </Select>
                                 {
                                     !paid?(

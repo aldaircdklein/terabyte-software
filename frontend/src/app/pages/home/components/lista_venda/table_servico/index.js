@@ -53,7 +53,7 @@ export const TableServico = ({listVenda}) => {
                             element.serviceOrders.map((element2) => (
                                 <>
                                     <tr>
-                                        <Th colSpan="5">Ordem de serviço</Th>
+                                        <Th colSpan="5">Ordem de serviço - [<Span2 payment={element2.paymentType !== 'cancel'}>{element2.paymentType === 'cancel'? 'Serviço cancelado':'Serviço concluído'}</Span2>]</Th>
                                     </tr>
                                     <tr>
                                         <Td colSpan="3" title={`Problema relatado: ${element2.problemDescription}`}>Problema relatado: {FormatString(element2.problemDescription,30)}</Td>
@@ -90,8 +90,11 @@ export const TableServico = ({listVenda}) => {
                                         <Td colSpan="1"><strong>Total: R$ <Span>{(parseFloat(element2.sold.total? element2.sold.total:0) + parseFloat(element2.servicePrice)).toFixed(2)}</Span></strong></Td>
                                     </tr>
                                     <tr>
-                                        <Td colSpan="1"><strong>Pagamento - [<Span2 payment={element2.paid}>{element2.paid? 'Concluído':'Pendente'}</Span2>]</strong></Td>
-                                        <Td colSpan="2">
+                                        <Td colSpan="2"><strong>Pagamento - [<Span2 payment={element2.paid}>{element2.paid? 'Concluído':'Pendente'}</Span2>]</strong></Td>
+                                        <Td colSpan="3"><strong>Pagamento - [<Span2 payment={element2.paid}>{element2.paid? 'Concluído':'Pendente'}</Span2>]</strong></Td>
+                                    </tr>
+                                    <tr>
+                                        <Td colSpan="3">
                                             <p>
                                                 Desconto: R$ <Input placeholder={"Desconto"} onChange={event => ModificationDesconto({element,element2}, Mask(event.target.value,'money'))} value={element2.discount} width={'20%'}/>
                                                 Parte paga: R$ <Input placeholder={"Parte já paga"} onChange={event => ModificationPartePagamento({element,element2}, Mask(event.target.value,'money'))} value={element2.partPayment} width={'20%'}/>
@@ -106,8 +109,8 @@ export const TableServico = ({listVenda}) => {
                                                 <option value='transfer'>Transferência</option>
                                                 <option value='pix'>Pix</option>
                                                 <option value='check'>Cheque</option>
-                                                <option value='onCredit'>Crédito em loja</option>
-                                                <option value='cancel'>Cancelar</option>
+                                                <option value='onCredit'>Não pago</option>
+                                                <option value='cancel'>Serviço não executado</option>
                                             </Select>
                                         </Td>
                                         <Td colSpan="1"><ButtonAction onClick={()=>{Salvar(element2)}} color={Colors().white} bgcolor={Colors().primary} marginTop="8vh">{Icons().FaSave} Salvar</ButtonAction></Td>

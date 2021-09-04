@@ -50,11 +50,11 @@ export const ButtonBuscar = styled.button`
 export const List = styled.ul`
     list-style: none;
     overflow-y: scroll;
-    max-height: 55vh;
+    max-height: 45vh;
 `
 export const Li = styled.li`
     display: grid;
-    grid-template-columns: auto 20%;
+    grid-template-columns: auto 22%;
     background-color: ${Colors().green1};
     padding: 2vh;
     border: outset;

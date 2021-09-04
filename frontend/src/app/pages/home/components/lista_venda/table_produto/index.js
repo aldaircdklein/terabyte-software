@@ -106,8 +106,8 @@ export const TableProduto = ({listVenda}) => {
                                                     <option value='transfer'>Transferência</option>
                                                     <option value='pix'>Pix</option>
                                                     <option value='check'>Cheque</option>
-                                                    <option value='onCredit'>Crédito em loja</option>
-                                                    <option value='cancel'>Cancelar</option>
+                                                    <option value='onCredit'>Não pago</option>
+                                                    <option value='cancel'>Cancelado</option>
                                                 </Select>
                                             </Td>
                                             <Td colSpan="1"><ButtonAction onClick={()=>{Salvar(element)}} color={Colors().white} bgcolor={Colors().primary} marginTop="8vh">{Icons().FaSave} Salvar</ButtonAction></Td>

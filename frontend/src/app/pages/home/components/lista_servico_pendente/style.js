@@ -19,7 +19,7 @@ export const List = styled.ul`
 `
 export const Li = styled.li`
     display: grid;
-    grid-template-columns: auto 20%;
+    grid-template-columns: auto 22%;
     background-color: ${Colors().yellow1};
     padding: 2vh;
     border: outset;

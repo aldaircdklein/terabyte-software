@@ -25,6 +25,7 @@ import {
     ModificarListCliente,
     EnviarMensagemAutomatica,
     FinalizarServico,
+    EntregarServico,
     CalculaTotalVenda,
     ModificarStatusVenda
 } from './service';
@@ -52,7 +53,9 @@ export const useTelaServico = () => {
     const [servicePrice, setServicePrice] = useState(0);
     const [startDate, setStartDate] = useState('');
     const [endDate,setEndDate] = useState('');
+    const [outDate,setOutDate] = useState('');
     const [finished, setFinished] = useState(false);
+    const [out, setOut] = useState(false);
     const [paid, setPaid] = useState(false);
     const [paymentType, setPaymentType] = useState('onCredit');
     const [discount, setDiscount] = useState(0);
@@ -96,6 +99,7 @@ export const useTelaServico = () => {
             partPayment,
             startDate: typeRequest === 'cadastrar'? undefined:startDate,
             finished: typeRequest === 'cadastrar'? undefined:finished,
+            out: typeRequest === 'cadastrar'? undefined:out,
             paid: typeRequest === 'cadastrar'? undefined:paid,
 	        paymentType: typeRequest === 'cadastrar'? undefined:paymentType,
             computerId: computer._id,
@@ -171,12 +175,30 @@ export const useTelaServico = () => {
         }
         EnviarMensagemAutomatica(dados);
     }
+
     const finalizarServico = async () => {
         try {
             
             await showLoarding();
             ReenviarWhatsapp();
             const result = await FinalizarServico(servico._id);
+            let newCliente = cliente;
+            let posicaoComputer = cliente.computers.findIndex((element) => {return element._id === computer._id});          
+            newCliente.computers[posicaoComputer].serviceOrders = ModificarListCliente(newCliente.computers[posicaoComputer].serviceOrders,servico._id,result.data);
+            setListServicos(ModificarListCliente(listServicos,servico._id,result.data))
+            setServico(result.data);
+            addAlert(generationSuccess('014-A'));
+        } catch (error) {
+            addAlert(generationError('021-B'));
+        }finally{
+            await hiddeLoarding();
+        }
+    }
+
+    const entregarComputador = async () => {
+        try {            
+            await showLoarding();
+            const result = await EntregarServico(servico._id);
             let newCliente = cliente;
             let posicaoComputer = cliente.computers.findIndex((element) => {return element._id === computer._id});          
             newCliente.computers[posicaoComputer].serviceOrders = ModificarListCliente(newCliente.computers[posicaoComputer].serviceOrders,servico._id,result.data);
@@ -213,6 +235,7 @@ export const useTelaServico = () => {
         setServiceDescription('');
         setServicePrice(0);
         setFinished(false);
+        setOut(false);
         setServico({});
         setTelaServico('cadastrar');
         setListVenda([]);
@@ -289,6 +312,7 @@ export const useTelaServico = () => {
         try {
             if(servico._id !== undefined){
                     if(servico.endDate){setEndDate(servico.endDate)}
+                    if(servico.outDate){setOutDate(servico.outDate)}
                     setServicePrice((parseFloat(servico.servicePrice)).toFixed(2));
                     setCode(servico.code);
                     setVoltage(servico.voltage);
@@ -306,6 +330,7 @@ export const useTelaServico = () => {
                     setServiceDescription(servico.serviceDescription);
                     setStartDate(format(parseISO(servico.startDate), 'yyyy-MM-dd'));
                     setFinished(servico.finished);
+                    setOut(servico.out);
                     setPaid(servico.paid);
                     setPaymentType(servico.paymentType);
                     setDiscount((parseFloat(servico.discount)).toFixed(2));
@@ -333,11 +358,6 @@ export const useTelaServico = () => {
     },[servicePrice])
 
     return [
-        salvarDados,
-        finalizarServico,
-        ReenviarWhatsapp,
-        selecionarServico,
-        resetTelaServico,
         voltage,
         password,
         energySource,
@@ -354,12 +374,25 @@ export const useTelaServico = () => {
         servicePrice,
         startDate,
         endDate,
+        outDate,
         finished,
+        out,
         validation,
         valueTotal,
         modalConfirmation,
         listServicos,
         listVenda,
+        paid,
+        paymentType,
+        servico,
+        discount,
+        partPayment,
+        salvarDados,
+        finalizarServico,
+        entregarComputador,
+        ReenviarWhatsapp,
+        selecionarServico,
+        resetTelaServico,
         PreencherVoltagem,
         PreencherSenha,
         PreencherFonteEnergia,
@@ -379,12 +412,7 @@ export const useTelaServico = () => {
         ModificationShowModal,
         ModificationShowModal1,
         ModificationShowModal2,
-        paid,
-        paymentType,
         PreencherPayment,
-        servico,
-        discount,
-        partPayment,
         PreencherDesconto,
         PreencherPartePagamento
     ]
