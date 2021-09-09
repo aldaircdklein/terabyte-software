@@ -29,4 +29,8 @@ home.on('ready', function () {
   //shell.openPath("C://powermotor-x64//executaveis_modulos//startNode.vbs")
   //shell.openPath("C://powermotor-x64//executaveis_modulos//startBackup.vbs")
 
+  if(new Date().getDate() == 5){
+    //shell.openPath("C://powermotor-x64//executaveis_modulos//deleteBackup.vbs")
+  }
+
 });
