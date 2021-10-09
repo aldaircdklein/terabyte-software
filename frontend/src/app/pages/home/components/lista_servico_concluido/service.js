@@ -13,6 +13,14 @@ export const ListaServicoConcluidoByDiagnostico = async (dado) => {
     const result = await api.get(ServeRoutes(dado).listServiceByDiagnostic);
     return result.data;
 }
+export const ListaServicoConcluidoNaoEntregue = async () => {
+    const result = await api.get(ServeRoutes(true).listServiceFinishNotOut);
+    return result.data;
+}
+export const ListaServicoConcluidoNaoExecutado = async () => {
+    const result = await api.get(ServeRoutes(true).listServiceFinishCancel);
+    return result.data;
+}
 export const DivideDados = (dados) => {
     let cliente = dados.user;
     let servico = dados.serviceOrders;

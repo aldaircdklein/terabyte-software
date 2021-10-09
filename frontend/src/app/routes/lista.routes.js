@@ -11,6 +11,7 @@ export const listRoutes = () => {
         computadorList:'/listagem/computadores',
         configuracao:'/configuracao',
         vendaList:'/listagem/venda',
-        extrawhatsapp:'/extrawhatsapp'
+        extrawhatsapp:'/extrawhatsapp',
+        extrarecados:'/extrarecados'
     }
 }

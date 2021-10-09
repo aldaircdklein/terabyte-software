@@ -26,5 +26,6 @@ export const ListError = () => {
         {code:'021-B',alert:{msg:`Problema ao finalizar e enviar mensagem!`,color}},
         {code:'022-B',alert:{msg:`Problema ao salvar configurações!`,color}},
         {code:'023-B',alert:{msg:`Problemas ao carregar lista de vendas!`,color}},
+        {code:'024-B',alert:{msg:`Problemas ao carregar lista de recados!`,color}},
     ]
 }

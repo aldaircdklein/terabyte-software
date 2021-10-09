@@ -8,6 +8,8 @@ import ListFinish from '@modules/serviceOrder/services/listFinish';
 import ListServiceOrderByCode from '@modules/serviceOrder/services/listServiceOrderByCode';
 import ListServiceOrderByDiagnostic from '@modules/serviceOrder/services/listServiceOrderByDiagnostic';
 import ListUnpaid from '@modules/serviceOrder/services/listUnpaidServiceOrder';
+import ListFinishNotOut from '@modules/serviceOrder/services/listFinishNotOut';
+import ListFinishCancel from '@modules/serviceOrder/services/listFinishCancel';
 
 export default class ServiceOrderController {
   async index(request: Request, response: Response, next: NextFunction) {
@@ -37,6 +39,34 @@ export default class ServiceOrderController {
       const finishedBoolean = finished === 'true' ? true : false;
 
       const listFinish = new ListFinish();
+      const result = await listFinish.execute(finishedBoolean);
+      return response.status(200).json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async showNotOut(request: Request, response: Response, next: NextFunction) {
+    try {
+      const { finished } = request.query;
+
+      const finishedBoolean = finished === 'true' ? true : false;
+
+      const listFinish = new ListFinishNotOut();
+      const result = await listFinish.execute(finishedBoolean);
+      return response.status(200).json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async showFinishCancel(request: Request, response: Response, next: NextFunction) {
+    try {
+      const { finished } = request.query;
+
+      const finishedBoolean = finished === 'true' ? true : false;
+
+      const listFinish = new ListFinishCancel();
       const result = await listFinish.execute(finishedBoolean);
       return response.status(200).json(result);
     } catch (error) {

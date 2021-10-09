@@ -13,7 +13,8 @@ import {
     generationWarning
 } from '../../../../error/index';
 import{
-    ListaVendas
+    ListaVendas,
+    OrdenaArray
 } from './service';
 import {useVenda} from '../../contexts/index';
 
@@ -23,6 +24,8 @@ export const useListVenda = () => {
     const [dateEnd, setDateEnd] = useState('');
     const [name, setName] = useState('');
     const [paid, setPaid] = useState(false);
+    const [ordenar, setOrdenar] = useState('data');
+    const [crescente, setCrescente] = useState('menor');
     const {addAlert} = useAlert();
     const {showLoarding, hiddeLoarding} = useLoarding();
     const [validation, setValidation] = useState(false);
@@ -33,7 +36,7 @@ export const useListVenda = () => {
             if(ValidationDados([dateStart,dateEnd])){
                 await showLoarding();
                 const newLista = await ListaVendas({dateStart,dateEnd,name,paid,tipo});
-                setListVenda(newLista);
+                setListVenda(OrdenaArray(newLista, ordenar, crescente));
             }else{
                 setValidation(true);
                 addAlert(generationWarning('002-C'));
@@ -49,7 +52,7 @@ export const useListVenda = () => {
         try {
             await showLoarding();
             const newLista = await ListaVendas({dateStart:undefined,dateEnd:undefined,name,paid,tipo});
-            setListVenda(newLista);   
+            setListVenda(OrdenaArray(newLista, ordenar, crescente));   
         } catch (error) {
             addAlert(generationError('023-B'));
         }finally{
@@ -73,6 +76,12 @@ export const useListVenda = () => {
         setListVenda([]);
         setTipo(dado);
     }
+    const PreencherOrdenar = (dado) => {
+        setOrdenar(dado);
+    }
+    const PreencherCrescente = (dado) => {
+        setCrescente(dado);
+    }
 
     useEffect(()=>{
         (async ()=>{
@@ -91,11 +100,15 @@ export const useListVenda = () => {
         name,
         paid,
         tipo,
+        ordenar,
+        crescente,
         PreencherDateStart,
         PreencherDateEnd,
         PreencherName,
         PreencherPaid,
         PreencherTipo,
-        BuscarTodos
+        BuscarTodos,
+        PreencherOrdenar,
+        PreencherCrescente
     ]
 }

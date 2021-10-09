@@ -1,8 +1,12 @@
 import ComputerModel from '@shared/models/ComputerModel';
 import { subDays } from 'date-fns';
 
-export default class ListServiceOrderByDiagnostic {
-  async execute(diagnostic: string) {
+export default class ListFinishCancel {
+  async execute(finished = false) {
+    const match = {
+      'serviceOrders.finished': finished,
+      'serviceOrders.paymentType':'cancel'
+    };
 
     const computers = await ComputerModel.aggregate()
       .lookup({
@@ -67,7 +71,7 @@ export default class ListServiceOrderByDiagnostic {
                       observation: '$observation',
                       code: '$code',
                       discount: '$discount',
-                      partPayment: '$partPayment',
+                      partPayment: '$partPayment'
                     },
                     items: {
                       $push: '$items',
@@ -97,7 +101,7 @@ export default class ListServiceOrderByDiagnostic {
                 observation: '$sold._id.observation',
                 code: '$sold._id.code',
                 discount: '$sold._id.discount',
-                partPayment: '$sold._id.partPayment',
+                partPayment: '$sold._id.partPayment'
               },
               code: 1,
               voltage: 1,
@@ -116,6 +120,7 @@ export default class ListServiceOrderByDiagnostic {
               diagnostic: 1,
               serviceDescription: 1,
               finished: 1,
+              out: 1,
               servicePrice: 1,
               paymentType: 1,
               paid: 1,
@@ -129,12 +134,7 @@ export default class ListServiceOrderByDiagnostic {
         as: 'serviceOrders',
       })
       .unwind({ path: '$serviceOrders', preserveNullAndEmptyArrays: true })
-      .match({ $or:[
-          {'serviceOrders.diagnostic': { $regex: new RegExp(diagnostic), $options: 'i' }},
-          {'serviceOrders.problemDescription': { $regex: new RegExp(diagnostic), $options: 'i' }},
-          {'serviceOrders.serviceDescription': { $regex: new RegExp(diagnostic), $options: 'i' }},
-        ]
-      })
+      .match(match)
       .group({
         _id: {
           _id: '$_id',

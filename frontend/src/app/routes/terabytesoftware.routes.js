@@ -12,7 +12,8 @@ import{
     TelaListaServicoPendente,
     TelaListaServicoConcluido,
     ListVenda,
-    TelaWhatsapp
+    TelaWhatsapp,
+    TelaRecado
 } from '../pages/home/components/index';
 import {
     listRoutes
@@ -35,6 +36,7 @@ export function Routes(){
                 <Route path={listRoutes().serviceConcluidoList} component={TelaListaServicoConcluido} />
                 <Route path={listRoutes().vendaList} component={ListVenda} />
                 <Route path={listRoutes().extrawhatsapp} component={TelaWhatsapp} />
+                <Route path={listRoutes().extrarecados} component={TelaRecado} />
             </Switch>
         </BrowserRouter>
     )

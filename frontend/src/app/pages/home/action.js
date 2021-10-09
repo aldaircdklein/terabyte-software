@@ -55,7 +55,7 @@ export const ListaMenu = () => {
         },
         {
             name:'Recados',
-            action:listRoutes().configuracao,
+            action:listRoutes().extrarecados,
             icon:Icons().FaEdit
         },
         {

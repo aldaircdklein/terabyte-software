@@ -3,6 +3,7 @@ import IUser from './user';
 import IServiceOrder from './serviceOrder';
 import IProduct from './product';
 import ISold from './sold';
+import IMessage from './message';
 
 export enum PaymentType {
   CASH = 'cash',
@@ -15,4 +16,4 @@ export enum PaymentType {
   ON_CREDIT = 'onCredit',
   CANCEL = 'cancel'
 }
-export { IComputer, IUser, IServiceOrder, IProduct, ISold };
+export { IComputer, IUser, IServiceOrder, IProduct, ISold, IMessage };

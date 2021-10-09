@@ -18,12 +18,16 @@ export const ListVenda = () => {
         name,
         paid,
         tipo,
+        ordenar,
+        crescente,
         PreencherDateStart,
         PreencherDateEnd,
         PreencherName,
         PreencherPaid,
         PreencherTipo,
-        BuscarTodos
+        BuscarTodos,
+        PreencherOrdenar,
+        PreencherCrescente
     ] = useListVenda();
 
     return (
@@ -40,10 +44,14 @@ export const ListVenda = () => {
             <NavBusca>
                 <h3 style={{marginRight:'1vw'}}>Filtrar: </h3>
                 Ordernar:
-                <Select style={{marginRight:'1vw'}} onChange={event => alert('teste')} value={'data'}>
+                <Select style={{marginRight:'1vw'}} onChange={event => PreencherOrdenar(event.target.value)} value={ordenar}>
                     <option value={'data'}>Data</option>
                     <option value={'nome'}>Nome</option>
-                    <option value={'valortotal'}>Valor total</option>
+                    <option value={'valortotal'}>Valor</option>
+                </Select>
+                <Select style={{marginRight:'1vw'}} onChange={event => PreencherCrescente(event.target.value)} value={crescente}>
+                    <option value={'menor'}>Menor</option>
+                    <option value={'maior'}>Maior</option>
                 </Select>
                 Nome/código:
                 <Input disabled={tipo === 'true'} placeholder={"Nome ou código"} onChange={event => PreencherName(event.target.value)} value={name}/>

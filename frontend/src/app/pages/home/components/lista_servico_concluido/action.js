@@ -4,7 +4,9 @@ import {
     ListaServicoConcluido,
     DivideDados,
     ListaServicoConcluidoByCode,
-    ListaServicoConcluidoByDiagnostico
+    ListaServicoConcluidoByDiagnostico,
+    ListaServicoConcluidoNaoEntregue,
+    ListaServicoConcluidoNaoExecutado
 } from './service'
 import {
     useCliente,
@@ -73,6 +75,29 @@ export const useListServicoConcluido = () => {
             await hiddeLoarding();
         }
     }
+    const BuscarConcluidoNaoEntregue = async () => {
+        try {
+            await showLoarding();
+            const newLista = await ListaServicoConcluidoNaoEntregue();
+            setListConcluido(newLista);   
+        } catch (error) {
+            addAlert(generationError('002-B'));
+        }finally{
+            await hiddeLoarding();
+        }
+    }
+
+    const BuscarConcluidoNaoExecutado = async () => {
+        try {
+            await showLoarding();
+            const newLista = await ListaServicoConcluidoNaoExecutado();
+            setListConcluido(newLista);   
+        } catch (error) {
+            addAlert(generationError('002-B'));
+        }finally{
+            await hiddeLoarding();
+        }
+    }
 
     const separarDados = (dados) => {
         let newDados = DivideDados(dados);
@@ -120,6 +145,8 @@ export const useListServicoConcluido = () => {
         listConcluido,
         validation,
         busca,
-        BuscarDignostico
+        BuscarDignostico,
+        BuscarConcluidoNaoEntregue,
+        BuscarConcluidoNaoExecutado
     ]
 }

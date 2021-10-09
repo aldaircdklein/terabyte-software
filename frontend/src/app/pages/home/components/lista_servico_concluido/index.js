@@ -18,7 +18,9 @@ export const TelaListaServicoConcluido = () => {
         listConcluido,
         validation,
         busca,
-        BuscarDignostico
+        BuscarDignostico,
+        BuscarConcluidoNaoEntregue,
+        BuscarConcluidoNaoExecutado
     ] = useListServicoConcluido();
 
     return (
@@ -33,8 +35,8 @@ export const TelaListaServicoConcluido = () => {
                 <ButtonBuscar onClick={()=>{BuscarDignostico()}}>{Icons().FaSearch} Buscar diagnóstico</ButtonBuscar>
             </NavBusca>
             <NavBusca>
-                <ButtonBuscar >{Icons().FaSearch} Buscar finalizados não entregues</ButtonBuscar>
-                <ButtonBuscar >{Icons().FaSearch} Buscar não executados/cobrados</ButtonBuscar>
+                <ButtonBuscar onClick={()=> {BuscarConcluidoNaoEntregue()}} >{Icons().FaSearch} Buscar finalizados não entregues</ButtonBuscar>
+                <ButtonBuscar onClick={()=> {BuscarConcluidoNaoExecutado()}} >{Icons().FaSearch} Buscar não executados/cobrados</ButtonBuscar>
             </NavBusca>
             <List className="scroll-style">
                 {

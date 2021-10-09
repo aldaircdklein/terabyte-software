@@ -13,6 +13,8 @@ export const ServeRoutes = (param) => {
         listComputer:`/computers/${param}`,
         listServiceByCode:`/service-orders/listbycode/${param}`,
         listServiceByDiagnostic:`/service-orders/listbydiagnostic/${param}`,
+        listServiceFinishNotOut:`/service-orders/notout?finished=${param}`,
+        listServiceFinishCancel:`/service-orders/finishcancel?finished=${param}`,
         createSold:`/sold`,
         updateSold:`/sold/${param}`,
         createProduct:`/products`,
@@ -25,6 +27,9 @@ export const ServeRoutes = (param) => {
         deleteUpdateService:`/service-orders/${param}`,
         outComputerService:`/service-orders/out/${param}`,
         listSold:`/sold?${param}`,
-        listServiceOrderUnpaid:`/service-orders/unpaid?${param}`
+        listServiceOrderUnpaid:`/service-orders/unpaid?${param}`,
+        listMessageAll:`/message`,
+        createMessage:`/message`,
+        deleteUpdateMessage:`/message/${param}`,
     }
 }

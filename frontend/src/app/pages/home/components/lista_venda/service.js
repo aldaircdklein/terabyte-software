@@ -21,20 +21,54 @@ export const ListaVendas = async (dados) => {
             result = await api.get(ServeRoutes(`startDate=2019-01-01&endDate=${format(data, 'yyyy-MM-dd')}${dados.name !== ''? '&name='+dados.name:''}${'&paid='+dados.paid}`).listSold);
         }
     }
-    return OrdenaArrayByDate(result.data);
+    return result.data;
 }
 
-const OrdenaArrayByDate = (array) => {
-    array.sort((a,b) => {
-        if(a.serviceOrders){
-            const dataA = Date.parse(format(parseISO(a.serviceOrders[0].createdAt), 'yyyy/MM/dd'))
-            const dataB = Date.parse(format(parseISO(b.serviceOrders[0].createdAt), 'yyyy/MM/dd'))
-            return dataA - dataB;
-        }else{
-            const dataA = Date.parse(format(parseISO(a.createdAt), 'yyyy/MM/dd'))
-            const dataB = Date.parse(format(parseISO(b.createdAt), 'yyyy/MM/dd'))
-            return dataA - dataB;
-        }
-    })
-    return array;
+export const OrdenaArray = (array, tipo, crescente) => {
+    if(tipo === 'data'){
+        array.sort((a,b) => {
+            if(a.serviceOrders){
+                const dataA = parseInt(format(parseISO(a.serviceOrders[0].createdAt), 'yyyyMMddHH'))
+                const dataB = parseInt(format(parseISO(b.serviceOrders[0].createdAt), 'yyyyMMddHH'))
+                return crescente === 'menor'? dataB - dataA:dataA - dataB;
+            }else{
+                const dataA = parseInt(format(parseISO(a.createdAt), 'yyyyMMddHH'))
+                const dataB = parseInt(format(parseISO(b.createdAt), 'yyyyMMddHH'))
+                return crescente === 'menor'? dataB - dataA:dataA - dataB;
+            }
+        })
+        return array;
+    }else if(tipo === 'nome'){
+        array.sort((a,b) => {
+            if(a.serviceOrders){
+                if(a.user.name > b.user.name)
+                    return crescente === 'menor'? 1:-1;
+                if(a.user.name < b.user.name)
+                    return crescente === 'menor'? -1:1;
+                return 0;
+            }else{
+                if(a.name !== ""){
+                    if(a.name > b.name)
+                        return crescente === 'menor'? 1:-1;
+                    if(a.name < b.name)
+                        return crescente === 'menor'? -1:1;
+                    return 0;
+                }
+            }
+        })
+        return array;
+    }else{
+        array.sort((a,b) => {
+            if(a.serviceOrders){
+                const dataA = parseFloat(a.serviceOrders[0].servicePrice) + parseFloat(a.serviceOrders[0].sold.total? a.serviceOrders[0].sold.total:0);
+                const dataB = parseFloat(b.serviceOrders[0].servicePrice) + parseFloat(b.serviceOrders[0].sold.total? b.serviceOrders[0].sold.total:0);
+                return crescente === 'menor'? dataA - dataB:dataB - dataA;
+            }else{
+                const dataA = a.total
+                const dataB = b.total
+                return crescente === 'menor'? dataA - dataB:dataB - dataA;
+            }
+        })
+        return array;
+    }
 }

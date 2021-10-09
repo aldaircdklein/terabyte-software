@@ -5,6 +5,8 @@ const serviceOrderController = new ServiceOrderController();
 const serviceOrderRoute = Router();
 
 serviceOrderRoute.get('/', serviceOrderController.show);
+serviceOrderRoute.get('/notout/', serviceOrderController.showNotOut);
+serviceOrderRoute.get('/finishcancel/', serviceOrderController.showFinishCancel);
 serviceOrderRoute.get('/listbycode/:code', serviceOrderController.showByCode);
 serviceOrderRoute.get('/listbydiagnostic/:diagnostic', serviceOrderController.showByDiagnostic);
 serviceOrderRoute.get('/unpaid', serviceOrderController.index);
