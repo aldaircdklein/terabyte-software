@@ -11,12 +11,21 @@ export default class UpdateSold {
       total: 0,
     };
     removeUndefined<typeof payload>(payload);
+    const oldSold = await SoldModel.findOne({ _id: soldId})
+
     for (const item of payload.items) {
       const product = await ProductModel.findOne({ _id: item.product });
-      product.quantity -= item.quantity;
+      let newQuantity = item.quantity;
+      oldSold.items.map(element => {
+        if(element.product == item.product){
+          newQuantity = item.quantity - element.quantity
+        }
+      })
+      product.quantity -= newQuantity;
       payload.total += product.price * item.quantity;
       await product.save();
     }
+
     const sold = await SoldModel.findOneAndUpdate(
       { _id: soldId },
       { $set: payload },
