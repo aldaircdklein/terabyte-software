@@ -133,6 +133,8 @@ export default class ListUser {
               partPayment: 1,
               createdAt: 1,
               updated: 1,
+              out: 1,
+              outDate: 1,
             },
           },
         ],
