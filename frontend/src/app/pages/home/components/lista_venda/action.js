@@ -6,7 +6,10 @@ import {
 } from '../../../../util/contexts/index';
 import {
     ValidationDados,
-    beepAlerta
+    beepAlerta,
+    execStoreNavigation,
+    setStoreNavigation,
+    setLoadStore
 } from '../../../../util/index';
 import {
     generationError,
@@ -30,13 +33,21 @@ export const useListVenda = () => {
     const {showLoarding, hiddeLoarding} = useLoarding();
     const [validation, setValidation] = useState(false);
     const [tipo, setTipo] = useState(false);
+    const [searchMode, setSearchMode] = useState("create");
+    const [buscaStore, setBuscaStore] = useState(true);
 
     const Buscar = async () => {
         try {
             if(ValidationDados([dateStart,dateEnd])){
                 await showLoarding();
-                const newLista = await ListaVendas({dateStart,dateEnd,name,paid,tipo});
-                setListVenda(OrdenaArray(newLista, ordenar, crescente));
+                const newLista = await ListaVendas({dateStart,dateEnd,name,paid,tipo,searchMode});
+                if(!execStoreNavigation()){
+                    setStoreNavigation({dateStart,dateEnd,name,paid,tipo,searchMode}, 'Buscar');
+                    setListVenda(OrdenaArray(newLista, ordenar, crescente));
+                } else {
+                    setListVenda(OrdenaArray(newLista, ordenar, crescente));
+                }
+
             }else{
                 setValidation(true);
                 addAlert(generationWarning('002-C'));
@@ -51,7 +62,8 @@ export const useListVenda = () => {
     const BuscarTodos = async () => {
         try {
             await showLoarding();
-            const newLista = await ListaVendas({dateStart:undefined,dateEnd:undefined,name,paid,tipo});
+            const newLista = execStoreNavigation()? await ListaVendas(execStoreNavigation().data):await ListaVendas({dateStart:undefined,dateEnd:undefined,name,paid,tipo,searchMode});
+            setStoreNavigation({dateStart,dateEnd,name,paid,tipo,searchMode}, 'BuscarTodos');
             setListVenda(OrdenaArray(newLista, ordenar, crescente));   
         } catch (error) {
             addAlert(generationError('023-B'));
@@ -64,6 +76,7 @@ export const useListVenda = () => {
         setDateStart(date);
     }
     const PreencherDateEnd = (date) => {
+        setBuscaStore(false);
         setDateEnd(date);
     }
     const PreencherName = (dado) => {
@@ -82,6 +95,30 @@ export const useListVenda = () => {
     const PreencherCrescente = (dado) => {
         setCrescente(dado);
     }
+    const PreencherSearchMode = (dado) => {
+        setSearchMode(dado);
+    }
+
+    useEffect(() => {
+        if(execStoreNavigation() && buscaStore){
+            setLoadStore(
+                [
+                    {variable: 'dateStart', value:dateStart, func:setDateStart},
+                    {variable: 'dateEnd', value:dateEnd, func:setDateEnd},
+                    {variable: 'name', value:name, func:setName},
+                    {variable: 'paid', value:paid, func:setPaid},
+                    {variable: 'tipo', value:tipo, func:setTipo},
+                    {variable: 'searchMode', value:searchMode, func:setSearchMode}
+                ],
+                execStoreNavigation().data,
+                () => {
+                    eval(
+                        execStoreNavigation().execFunction
+                    )()
+                }
+            )
+        }
+    }, [dateEnd]);
 
     useEffect(()=>{
         (async ()=>{
@@ -94,7 +131,8 @@ export const useListVenda = () => {
     },[]);
 
     return [
-        Buscar,
+        dateStart,
+        dateEnd,
         listVenda,
         validation,
         name,
@@ -102,6 +140,8 @@ export const useListVenda = () => {
         tipo,
         ordenar,
         crescente,
+        searchMode,
+        Buscar,
         PreencherDateStart,
         PreencherDateEnd,
         PreencherName,
@@ -109,6 +149,7 @@ export const useListVenda = () => {
         PreencherTipo,
         BuscarTodos,
         PreencherOrdenar,
-        PreencherCrescente
+        PreencherCrescente,
+        PreencherSearchMode
     ]
 }

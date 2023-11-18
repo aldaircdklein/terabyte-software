@@ -6,7 +6,7 @@ export const FolhaEtiqueta = () => {
     let qrcode = [];
     
     for (let index = 0; index < 140; index++) {
-        const newId = `${format(new Date(), 'ddMMyyyyHHmmss')}${crypto.randomBytes(10).toString('hex')}`;
+        const newId = `${format(new Date(), 'yyyyMMddHHmmss')}${crypto.randomBytes(1).toString('hex')}${index}`;
         QRCode.toDataURL(newId, function (err, url) {
             qrcode.push(url);
         })

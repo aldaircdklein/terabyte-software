@@ -14,7 +14,7 @@ import ListFinishCancel from '@modules/serviceOrder/services/listFinishCancel';
 export default class ServiceOrderController {
   async index(request: Request, response: Response, next: NextFunction) {
     try {
-      const { startDate, endDate, paid } = request.query;
+      const { startDate, endDate, paid, searchMode } = request.query;
 
       const listUnpaid = new ListUnpaid();
 
@@ -25,7 +25,8 @@ export default class ServiceOrderController {
       const result = await listUnpaid.execute(
         String(startDate),
         String(endDate),
-        paidBoolean
+        paidBoolean,
+        String(searchMode),
       );
       return response.status(200).json(result);
     } catch (error) {

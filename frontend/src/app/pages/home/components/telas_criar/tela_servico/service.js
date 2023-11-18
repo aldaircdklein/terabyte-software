@@ -63,6 +63,17 @@ export const ModificarListCliente = (list, id, newElement) => {
     }
     return newList;
 }
+export const FormatListVendaForService = (sold, items) => {
+    const newSold = sold;
+    const newItems = items.map(element => {
+        return {
+            product: [{...element.product}],
+            quantity: element.quantity
+        }
+    })
+    newSold.items = newItems;
+    return newSold;
+}
 export const CalculaTotalVenda = (listVenda) => {
     let newValue = 0;
     listVenda.map((element) => {
@@ -94,5 +105,6 @@ export const ModificarStatusVenda = async (listVenda,dados) => {
         paid:dados.paid,
         paymentType: dados.paymentType
     }
-    await api.put(ServeRoutes(dados._id).updateSold,json);
+    const result = await api.put(ServeRoutes(dados._id).updateSold,json);
+    return result;
 }

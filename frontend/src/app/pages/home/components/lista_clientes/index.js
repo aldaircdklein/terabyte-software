@@ -12,10 +12,11 @@ import {Icons} from '../../../../icons/index';
 
 export const ListClientes = () => {
     const [
-        Buscar,
+        busca,
         listCliente,
-        AddCliente,
         validation,
+        Buscar,
+        AddCliente,
         PreencherBusca,
         BuscarTodos
     ] = useListClientes();
@@ -24,7 +25,7 @@ export const ListClientes = () => {
         <>
             <NavBusca>
                 <h3>{Icons().FaUserAlt} Buscar Clientes: </h3>
-                <Input autoFocus request={validation} placeholder="Nome do cliente" onChange={event => PreencherBusca(event.target.value)}/>
+                <Input autoFocus request={validation} placeholder="Nome do cliente" onChange={event => PreencherBusca(event.target.value)} value={busca}/>
                 <ButtonBuscar onClick={()=>{Buscar()}}>{Icons().FaSearch} Buscar</ButtonBuscar>
                 <ButtonBuscar onClick={()=>{BuscarTodos()}}>{Icons().FaSearch} Todos</ButtonBuscar>
             </NavBusca>

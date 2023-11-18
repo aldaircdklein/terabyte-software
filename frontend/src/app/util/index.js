@@ -6,6 +6,13 @@ import {ValidationDados} from './validation';
 import {FormatString} from './formatString';
 import {GerarImpressao} from './impressao';
 import {beepAlerta} from './beep';
+import {
+    execStoreNavigation,
+    setStoreNavigation
+} from './storeNavigation';
+import {
+    setLoadStore
+} from './setLoadStore';
 
 export {
     navigation,
@@ -15,5 +22,8 @@ export {
     ValidationDados,
     FormatString,
     GerarImpressao,
-    beepAlerta
+    beepAlerta,
+    execStoreNavigation,
+    setStoreNavigation,
+    setLoadStore
 }

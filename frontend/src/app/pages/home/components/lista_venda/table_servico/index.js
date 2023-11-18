@@ -87,7 +87,7 @@ export const TableServico = ({listVenda}) => {
                                         <Td colSpan="1"><strong>Total mão de obra: R$ <Span>{(parseFloat(element2.servicePrice)).toFixed(2)}</Span></strong></Td>
                                         <Td colSpan="1"><strong>Desconto: R$ <Span>{(parseFloat(element2.discount? element2.discount:0)).toFixed(2)}</Span></strong></Td>
                                         <Td colSpan="1"><strong>Parte paga: R$ <Span>{(parseFloat(element2.partPayment? element2.partPayment:0)).toFixed(2)}</Span></strong></Td>
-                                        <Td colSpan="1"><strong>Total: R$ <Span>{(parseFloat(element2.sold.total? element2.sold.total:0) + parseFloat(element2.servicePrice)).toFixed(2)}</Span></strong></Td>
+                                        <Td colSpan="1"><strong>Total: R$ <Span>{(parseFloat(element2.sold.total? element2.sold.total:0) + parseFloat(element2.servicePrice) - parseFloat(element2.discount? element2.discount:0) - parseFloat(element2.partPayment? element2.partPayment:0)).toFixed(2)}</Span></strong></Td>
                                     </tr>
                                     <tr>
                                         <Td colSpan="2"><strong>Pagamento - [<Span2 payment={element2.paid}>{element2.paid? 'Concluído':'Pendente'}</Span2>]</strong></Td>

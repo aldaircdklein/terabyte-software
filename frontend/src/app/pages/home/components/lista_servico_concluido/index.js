@@ -12,12 +12,12 @@ import {Icons} from '../../../../icons/index';
 
 export const TelaListaServicoConcluido = () => {
     const [
-        separarDados,
-        Buscar,
-        PreencherBusca,
         listConcluido,
         validation,
         busca,
+        separarDados,
+        Buscar,
+        PreencherBusca,
         BuscarDignostico,
         BuscarConcluidoNaoEntregue,
         BuscarConcluidoNaoExecutado

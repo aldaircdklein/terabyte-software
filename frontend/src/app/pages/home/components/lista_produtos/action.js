@@ -16,12 +16,15 @@ import {
 } from '../../../../error/index';
 import {
     ValidationDados,
-    beepAlerta
+    beepAlerta,
+    setStoreNavigation,
+    execStoreNavigation,
+    setLoadStore
 } from '../../../../util/index';
 import {useProduto} from '../../contexts/index';
 import {listRoutes} from '../../../../routes/lista.routes';
 
-export const useListProduto = () => {
+export const useActionListProduto = () => {
     const {setProduto,produto} = useProduto();
     const [listProduto, setListProduto] = useState([]);
     const [busca, setBusca] = useState('');
@@ -30,12 +33,15 @@ export const useListProduto = () => {
     const {setTelaProduto} = useTelasCriar();
     const [validation, setValidation] = useState(false);
     const history = useHistory();
+    const [select, setSelect] = useState(false);
+    const [buscaStore, setBuscaStore] = useState(true);
 
     const Buscar = async (dado) => {
         try {
             if(ValidationDados([busca]) || dado){
                 await showLoarding();
                 const newLista = await ListaProdutos(dado? dado:busca);
+                setStoreNavigation({busca: dado? dado:busca}, 'Buscar');
                 setListProduto(newLista);
             }else{
                 setValidation(true);
@@ -52,6 +58,7 @@ export const useListProduto = () => {
         try {
             await showLoarding();
             const newLista = await ListaProdutosTodos();
+            setStoreNavigation(null, 'BuscarTodos');
             setListProduto(newLista);   
         } catch (error) {
             addAlert(generationError('002-B'));
@@ -62,11 +69,27 @@ export const useListProduto = () => {
 
     const AddProduto = (newProduto) => {
         setProduto(newProduto);
+        setSelect(true);
     }
 
     const PreencherBusca = (dados) => {
+        setBuscaStore(false);
         setBusca(dados.toUpperCase());
     }
+
+    useEffect(() => {
+        if(execStoreNavigation() && buscaStore){
+            setLoadStore(
+                [{variable: 'busca', value:busca, func:setBusca}],
+                execStoreNavigation().data,
+                () => {
+                    eval(
+                        execStoreNavigation().execFunction
+                    )()
+                }
+            )
+        }
+    }, [busca]);
 
     useEffect(()=>{
         (async ()=>{
@@ -79,16 +102,17 @@ export const useListProduto = () => {
     },[]);
 
     useEffect(()=>{
-        if(produto._id !== undefined){
+        if(produto._id !== undefined && select){
             setTelaProduto('atualizar');
             history.push(listRoutes().productCreate);
         }
-    },[produto])
+    },[produto, select])
 
     return [
-        Buscar,
         listProduto,
         validation,
+        busca,
+        Buscar,
         AddProduto,
         PreencherBusca,
         BuscarTodos

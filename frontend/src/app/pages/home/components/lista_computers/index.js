@@ -15,12 +15,12 @@ import {Icons} from '../../../../icons/index'
 
 export const ListComputador = () => {
     const [
-        Buscar,
-        separarDados,
+        busca,
         validation,
         listComputer,
-        PreencherBusca,
-		busca
+        Buscar,
+        separarDados,
+        PreencherBusca
     ] = useListComputer();
 
     return (

@@ -83,12 +83,13 @@ export const TelaServico = ({typeRequest}) => {
         ModificationShowModal2,
         PreencherPayment,
         PreencherDesconto,
-        PreencherPartePagamento
+        PreencherPartePagamento,
+        ResultCalbackVenda
     ] = useTelaServico();
 
     return (
         <>
-            <ModalCompra typeRequest={'servico'}/>
+            <ModalCompra typeRequest={'servico'} resultCalback={ResultCalbackVenda}/>
             <ModalImpressao />
             <ShadowBox>
                 <h3>{Icons().FaWrench} Ordem de serviço</h3>
@@ -263,7 +264,7 @@ export const TelaServico = ({typeRequest}) => {
                     <tbody>
                         {
                             listVenda.map((element) => (
-                                <tr key={`listProcuctServico${element.product._id? element.product._id:element.product[0]._id}`} style={{color:'black'}}>
+                                <tr key={`listProcuctServico${element.product._id? element.product._id:element.product[0]._id}`} style={{color:'black', backgroundColor: element.newItem? '#fff75e':''}}>
                                     <td>{element.product.code? element.product.code:element.product[0].code}</td>
                                     <td title={`Descrição: ${element.product.description? element.product.description:element.product[0].description}`}>{FormatString(element.product.name? element.product.name:element.product[0].name,30)}</td>
                                     <td>x{element.quantity}</td>

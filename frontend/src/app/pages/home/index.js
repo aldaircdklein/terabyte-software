@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Routes} from "../../routes/terabytesoftware.routes";
 import {
     FaDev
@@ -32,13 +32,14 @@ export const Home = () => {
         setTelaCliente('cadastrar');
         setTelaComputer('cadastrar');
         setTelaServico('cadastrar');
-        setTelaProduto('cadastrar')
+        setTelaProduto('cadastrar');
         navigation(rota);
     }
 
     useEffect(()=>{
         if(window.location.pathname === '/'){
             navigation(listRoutes().animationHome);
+            localStorage.clear('breadcump')
         }
     },[])
 

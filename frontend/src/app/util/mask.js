@@ -62,6 +62,6 @@ const MONEY = (dado) => {
 
         return `${(dado/100).toFixed(2)}`
     } else {
-        return ''
+        return '0.00'
     }
 }

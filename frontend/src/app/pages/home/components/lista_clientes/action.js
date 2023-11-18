@@ -4,7 +4,12 @@ import {
     useTelasCriar,
     useLoarding
 } from '../../../../util/contexts/index';
-import {ValidationDados} from '../../../../util/index';
+import {
+    ValidationDados,
+    setStoreNavigation,
+    execStoreNavigation,
+    setLoadStore
+} from '../../../../util/index';
 import {
     useCliente
 } from '../../contexts/index';
@@ -28,12 +33,17 @@ export const useListClientes = () => {
     const {setTelaCliente, setTelaComputer, setTelaServico} = useTelasCriar();
     const [validation, setValidation] = useState(false);
     const history = useHistory();
+    const [select, setSelect] = useState(false);
+    const [buscaStore, setBuscaStore] = useState(true);
 
     const Buscar = async () => {
         try {
             if(ValidationDados([busca])){
                 await showLoarding();
                 const newLista = await ListaClientes(busca);
+                if(!execStoreNavigation()){
+                    setStoreNavigation({busca}, 'Buscar');
+                }
                 setListCliente(newLista);
             }else{
                 setValidation(true);
@@ -50,6 +60,7 @@ export const useListClientes = () => {
         try {
             await showLoarding();
             const newLista = await ListaClientesTodos();
+            setStoreNavigation(null, 'BuscarTodos');
             setListCliente(newLista);
         } catch (error) {
             addAlert(generationError('001-B'));
@@ -60,26 +71,43 @@ export const useListClientes = () => {
 
     const AddCliente = (newCliente) => {
         setCliente(newCliente);
+        setSelect(true);
     }
 
     const PreencherBusca = (dados) => {
+        setBuscaStore(false);
         setBusca(dados);
     }
 
+    useEffect(() => {
+        if(execStoreNavigation() && buscaStore){
+            setLoadStore(
+                [{variable: 'busca', value:busca, func:setBusca}],
+                execStoreNavigation().data,
+                () => {
+                    eval(
+                        execStoreNavigation().execFunction
+                    )()
+                }
+            )
+        }
+    }, [busca]);
+
     useEffect(()=>{
-        if(cliente._id !== undefined){
+        if(cliente._id !== undefined && select){
             setTelaCliente('atualizar');
             setTelaComputer('cadastrar');
             setTelaServico('cadastrar');
             history.push(listRoutes().clienteCreate);
         }
-    },[cliente])
+    },[cliente, select])
 
     return [
-        Buscar,
+        busca,
         listCliente,
-        AddCliente,
         validation,
+        Buscar,
+        AddCliente,
         PreencherBusca,
         BuscarTodos
     ]

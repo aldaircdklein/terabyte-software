@@ -18,6 +18,14 @@ import {
     VendaProvider,
     useVenda
 } from './vendaContext';
+import {
+ListProdutoProvider,
+useListProduto
+} from './listProdutoContext'
+import {
+VinProductProvider,
+useVinProduct
+} from './vinProductContext'
 
 export {
     ClienteProvider,
@@ -29,5 +37,9 @@ export {
     ServicoProvider,
     useServico,
     VendaProvider,
-    useVenda
+    useVenda,
+    ListProdutoProvider,
+    useListProduto,
+    VinProductProvider,
+    useVinProduct
 }

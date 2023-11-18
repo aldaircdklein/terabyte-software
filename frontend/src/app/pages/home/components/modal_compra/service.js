@@ -24,7 +24,8 @@ export const AdicionarProdutoLista = (dados) => {
         newListaVenda.unshift(
             {
                 product: newProduto,
-                quantity: dados.qtd
+                quantity: dados.qtd,
+                newItem: dados.typeRequest === "servico"
             }
         )
     }
@@ -35,6 +36,7 @@ export const ModificarQuantidadeProduto = (dados) => {
     for(const iterator of newListVenda){
         if(iterator.product._id === dados.id){
             iterator.quantity = dados.quantidade;
+            iterator.newItem = dados.typeRequest === "servico"
         }
     }
     return Array.from(newListVenda);

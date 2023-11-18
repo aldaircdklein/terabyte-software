@@ -2,9 +2,16 @@ import ComputerModel from '@shared/models/ComputerModel';
 import { subDays } from 'date-fns';
 
 export default class ListUnpaid {
-  async execute(startDate: string | Date, endDate: string | Date, paid: boolean) {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
+  async execute(startDate: string | Date, endDate: string | Date, paid: boolean, searchMode?: String) {
+    const match = {
+      'serviceOrders.paid': paid,
+    };
+    if (startDate && endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      const typeSearch = searchMode === "create"? 'serviceOrders.createdAt': 'serviceOrders.endDate';
+      match[typeSearch] = { $gte: start, $lte: end };
+    }
 
     const computers = await ComputerModel.aggregate()
       .lookup({
@@ -131,10 +138,7 @@ export default class ListUnpaid {
         as: 'serviceOrders',
       })
       .unwind({ path: '$serviceOrders', preserveNullAndEmptyArrays: true })
-      .match({
-        'serviceOrders.createdAt': { $gte: start, $lte: end },
-        'serviceOrders.paid': paid,
-      })
+      .match(match)
       .group({
         _id: {
           _id: '$_id',

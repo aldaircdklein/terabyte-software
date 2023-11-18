@@ -26,7 +26,10 @@ import {listRoutes} from '../../../../routes/lista.routes';
 import { useHistory } from 'react-router-dom';
 import {
     ValidationDados,
-    beepAlerta
+    beepAlerta,
+    setStoreNavigation,
+    execStoreNavigation,
+    setLoadStore
 } from '../../../../util/index';
 
 
@@ -41,12 +44,17 @@ export const useListServicoConcluido = () => {
     const [validation, setValidation] = useState(false);
     const {setTelaCliente, setTelaComputer, setTelaServico} = useTelasCriar();
     const history = useHistory();
+    const [select, setSelect] = useState(false);
+    const [buscaStore, setBuscaStore] = useState(true);
 
     const Buscar = async (dado) => {
         try {
             if(ValidationDados([busca]) || dado){
                 await showLoarding();
                 const newLista = await ListaServicoConcluidoByCode(dado? dado:busca);
+                if(!execStoreNavigation()){
+                    setStoreNavigation({busca: dado? dado:busca}, 'Buscar');
+                }
                 setListConcluido(newLista);
             }else{
                 setValidation(true);
@@ -64,6 +72,9 @@ export const useListServicoConcluido = () => {
             if(ValidationDados([busca])){
                 await showLoarding();
                 const newLista = await ListaServicoConcluidoByDiagnostico(busca);
+                if(!execStoreNavigation()){
+                    setStoreNavigation({busca}, 'BuscarDignostico');
+                }
                 setListConcluido(newLista);
             }else{
                 setValidation(true);
@@ -79,6 +90,7 @@ export const useListServicoConcluido = () => {
         try {
             await showLoarding();
             const newLista = await ListaServicoConcluidoNaoEntregue();
+            setStoreNavigation(null, 'BuscarConcluidoNaoEntregue');
             setListConcluido(newLista);   
         } catch (error) {
             addAlert(generationError('002-B'));
@@ -91,6 +103,7 @@ export const useListServicoConcluido = () => {
         try {
             await showLoarding();
             const newLista = await ListaServicoConcluidoNaoExecutado();
+            setStoreNavigation(null, 'BuscarConcluidoNaoExecutado');
             setListConcluido(newLista);   
         } catch (error) {
             addAlert(generationError('002-B'));
@@ -104,20 +117,36 @@ export const useListServicoConcluido = () => {
         setCliente(newDados.cliente);
         setComputer(newDados.computador);
         setServico(newDados.servico[0]);
+        setSelect(true);
     }
 
     const PreencherBusca = (dados) => {
+        setBuscaStore(false);
         setBusca(dados);
     }
 
+    useEffect(() => {
+        if(execStoreNavigation() && buscaStore){
+            setLoadStore(
+                [{variable: 'busca', value:busca, func:setBusca}],
+                execStoreNavigation().data,
+                () => {
+                    eval(
+                        execStoreNavigation().execFunction
+                    )()
+                }
+            )
+        }
+    }, [busca]);
+
     useEffect(()=>{
-        if(cliente._id !== undefined){
+        if(cliente._id !== undefined && select){
             setTelaCliente('atualizar');
             setTelaComputer('atualizar');
             setTelaServico('atualizar');
             history.push(listRoutes().clienteCreate);
         }
-    },[servico])
+    },[servico, select])
 
     useEffect(()=>{
         async function init(){
@@ -139,12 +168,12 @@ export const useListServicoConcluido = () => {
     },[])
 
     return [
-        separarDados,
-        Buscar,
-        PreencherBusca,
         listConcluido,
         validation,
         busca,
+        separarDados,
+        Buscar,
+        PreencherBusca,
         BuscarDignostico,
         BuscarConcluidoNaoEntregue,
         BuscarConcluidoNaoExecutado

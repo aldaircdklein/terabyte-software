@@ -12,7 +12,8 @@ import {Icons} from '../../../../icons/index';
 
 export const ListVenda = () => {
     const [
-        Buscar,
+        dateStart,
+        dateEnd,
         listVenda,
         validation,
         name,
@@ -20,6 +21,8 @@ export const ListVenda = () => {
         tipo,
         ordenar,
         crescente,
+        searchMode,
+        Buscar,
         PreencherDateStart,
         PreencherDateEnd,
         PreencherName,
@@ -27,7 +30,8 @@ export const ListVenda = () => {
         PreencherTipo,
         BuscarTodos,
         PreencherOrdenar,
-        PreencherCrescente
+        PreencherCrescente,
+        PreencherSearchMode
     ] = useListVenda();
 
     return (
@@ -35,9 +39,9 @@ export const ListVenda = () => {
             <NavBusca>
                 <h3 style={{marginRight:'1vw'}}>{Icons().FaFileInvoiceDollar} Buscar vendas: </h3>
                 Início:
-                <Input autoFocus type="date" request={validation} onChange={event => PreencherDateStart(event.target.value)}/>
+                <Input autoFocus type="date" request={validation} onChange={event => PreencherDateStart(event.target.value)} value={dateStart}/>
                 Final:
-                <Input type="date" request={validation} onChange={event => PreencherDateEnd(event.target.value)}/>
+                <Input type="date" request={validation} onChange={event => PreencherDateEnd(event.target.value)} value={dateEnd}/>
                 <ButtonBuscar onClick={()=>{Buscar()}}>{Icons().FaSearch} Buscar</ButtonBuscar>
                 <ButtonBuscar onClick={()=>{BuscarTodos()}}>{Icons().FaSearch} Todos</ButtonBuscar>
             </NavBusca>
@@ -53,7 +57,7 @@ export const ListVenda = () => {
                     <option value={'menor'}>Menor</option>
                     <option value={'maior'}>Maior</option>
                 </Select>
-                Nome/código:
+                Nome/cód.:
                 <Input disabled={tipo === 'true'} placeholder={"Nome ou código"} onChange={event => PreencherName(event.target.value)} value={name}/>
                 Pagamento:
                 <Select style={{marginRight:'1vw'}} onChange={event => PreencherPaid(event.target.value)} value={paid}>
@@ -61,9 +65,14 @@ export const ListVenda = () => {
                     <option value={false}>Não pagos</option>
                 </Select>
                 Tipo:
-                <Select onChange={event => PreencherTipo(event.target.value)} value={tipo}>
+                <Select style={{marginRight:'1vw'}} onChange={event => PreencherTipo(event.target.value)} value={tipo}>
                     <option value={false}>Avulsas</option>
                     <option value={true}>Serviços</option>
+                </Select>
+                Data:
+                <Select onChange={event => PreencherSearchMode(event.target.value)} value={searchMode}>
+                    <option value={"create"}>Criação</option>
+                    <option value={"endDate"}>Finalização</option>
                 </Select>
             </NavBusca>
             {

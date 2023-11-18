@@ -107,7 +107,7 @@ export const useTableServico = () => {
         let newRegistro = dado.element;
         let newService = dado.element2;
 
-        newService.discount = Number(valor);
+        newService.discount = valor;
 
         let newArrayVenda = newRegistro.serviceOrders.map((element) => {
             if(element._id === dado.element2._id){
@@ -120,7 +120,7 @@ export const useTableServico = () => {
         newRegistro.serviceOrders = newArrayVenda;
 
         let newArray = listVenda.map((element) => {
-            if(element.vehicle._id === dado.element.vehicle._id){
+            if(element.computer._id === dado.element.computer._id){
                 return newRegistro;
             }else{
                 return element;
@@ -132,9 +132,6 @@ export const useTableServico = () => {
     const ModificationPartePagamento = (dado, valor) => {
         let newRegistro = dado.element;
         let newService = dado.element2;
-
-        console.log(dado)
-
         newService.partPayment = valor;
 
         let newArrayVenda = newRegistro.serviceOrders.map((element) => {

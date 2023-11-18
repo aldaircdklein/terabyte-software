@@ -15,7 +15,8 @@ import {
     useServico,
     useComputer,
     useCliente,
-    useVenda
+    useVenda,
+    useVinProduct
 } from '../../../contexts/index';
 import {
     CadastrarServico,
@@ -27,7 +28,8 @@ import {
     FinalizarServico,
     EntregarServico,
     CalculaTotalVenda,
-    ModificarStatusVenda
+    ModificarStatusVenda,
+    FormatListVendaForService
 } from './service';
 import {ValidationDados} from '../../../../../util/index';
 import { format, parseISO } from 'date-fns';
@@ -73,6 +75,7 @@ export const useTelaServico = () => {
     const [modalConfirmation, setModalConfirmation] = useState('cadatrar');
     const history = useHistory();
     const {setBloqueioMenu} = useBloqueioMenu();
+    const {setVinItem} = useVinProduct();
 
     const generationCodeRandomic = () => {
         return `${format(new Date(), 'ddMMyyyyHHmmss')}${crypto.randomBytes(15).toString('hex')}`;
@@ -130,14 +133,15 @@ export const useTelaServico = () => {
                 if(ValidationDados([problemDescription])){
                     await showLoarding();
                     const result = await AtualizarServico(generationJson(tipo),servico._id);
+                    if(idVenda && idVenda !== ''){
+                        const soldResult = await ModificarStatusVenda(listVenda,{paid:result.data.paid,paymentType:result.data.paymentType,_id:idVenda});
+                        result.data.sold = FormatListVendaForService(soldResult.data, listVenda);
+                    }
                     let newCliente = cliente;
                     let posicaoComputer = cliente.computers.findIndex((element) => {return element._id === computer._id});          
                     newCliente.computers[posicaoComputer].serviceOrders = ModificarListCliente(newCliente.computers[posicaoComputer].serviceOrders,servico._id,result.data);
                     setListServicos(ModificarListCliente(listServicos,servico._id,result.data))
                     setServico(result.data);
-                    if(idVenda !== ''){
-                        await ModificarStatusVenda(listVenda,{paid:result.data.paid,paymentType:result.data.paymentType,_id:idVenda});
-                    }
                     addAlert(generationSuccess('009-A'));
                 }else{
                     setValidation(true);
@@ -165,6 +169,7 @@ export const useTelaServico = () => {
                 await hiddeLoarding();
             }
         }
+        setVinItem(false);
     }
 
     const ReenviarWhatsapp = () => {
@@ -308,6 +313,14 @@ export const useTelaServico = () => {
         setPartPayment(dado);
     }
 
+    const ResultCalbackVenda = (data) => {
+        listServicos.map(element => {
+            if(element._id === servico._id){
+                element.sold = FormatListVendaForService(data.data, listVenda);
+            }
+        });
+    }
+
     useEffect(()=>{
         try {
             if(servico._id !== undefined){
@@ -333,16 +346,18 @@ export const useTelaServico = () => {
                     setOut(servico.out);
                     setPaid(servico.paid);
                     setPaymentType(servico.paymentType);
-                    setDiscount((parseFloat(servico.discount)).toFixed(2));
-                    setPartPayment((parseFloat(servico.partPayment)).toFixed(2));
-                    if(servico.sold.items){
+                    setDiscount(servico.discount? (parseFloat(servico.discount)).toFixed(2):0.00);
+                    setPartPayment(servico.partPayment? (parseFloat(servico.partPayment)).toFixed(2):0.00);
+                    if(servico.sold?.items){
                         setValueTotal(parseFloat(servico.servicePrice? servico.servicePrice:0) + parseFloat(servico.sold.total))
                         const newArray = (servico.sold.items).map(element => {
                             return Array.isArray(element.product)? {product:element.product[0],quantity:element.quantity}:element
                         })
-                        setListVenda(newArray);
+                        const validProduct = newArray.filter(element => element.product !== undefined)
+                        setListVenda(validProduct);
                         setIdVenda(servico.sold._id);
                     }else{
+                        setIdVenda(null)
                         setValueTotal(parseFloat(servico.servicePrice? servico.servicePrice:0) + parseFloat(CalculaTotalVenda(listVenda)))
                     }
             }
@@ -414,6 +429,7 @@ export const useTelaServico = () => {
         ModificationShowModal2,
         PreencherPayment,
         PreencherDesconto,
-        PreencherPartePagamento
+        PreencherPartePagamento,
+        ResultCalbackVenda
     ]
 }

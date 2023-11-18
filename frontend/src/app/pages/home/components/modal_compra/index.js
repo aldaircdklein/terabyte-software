@@ -12,7 +12,8 @@ import {
     ModalHeader,
     ModalBody,
     ModalFooter,
-    ModalConfirmation
+    ModalConfirmation,
+    ModalConfirmationVinProduct
 } from '../../../../components/index';
 import {Icons} from '../../../../icons/index';
 import {useModalCompra} from './action';
@@ -23,26 +24,14 @@ import {
     TypeNumber
 } from '../../../../util/index';
 
-export const ModalCompra = ({typeRequest}) => {
+export const ModalCompra = ({typeRequest, resultCalback}) => {
     const [
-        salvarDados,
-        efetuarBusca,
-        addProduto,
-        modificarQuantidade,
-        removerProduto,
         show,
-        ModificationShow,
-        ModificationShowModal,
-        ModificationShowModal2,
-        PreencherBusca,
         validation,
         modalConfirmation,
-        ModificationModalConfirmation,
-        PreencherQtd,
         qtd,
         busca,
         listProduto,
-        SelecionarProduto,
         selectProduto,
         listVenda,
         total,
@@ -51,18 +40,31 @@ export const ModalCompra = ({typeRequest}) => {
         observation,
         discount,
         partPayment,
+        name,
+        vinItem,
+        salvarDados,
+        efetuarBusca,
+        addProduto,
+        modificarQuantidade,
+        removerProduto,
+        ModificationShow,
+        ModificationShowModal,
+        ModificationShowModal2,
+        PreencherBusca,
+        ModificationModalConfirmation,
+        PreencherQtd,
+        SelecionarProduto,
         PreencherPayment,
         PreencherName,
         PreencherObservacao,
         PreencherDesconto,
-        PreencherPartePagamento,
-        name
+        PreencherPartePagamento
     ] = useModalCompra();
 
     return (
         <>
             <ModalContainer showModalState={show} sizeX="70vw" sizeY="80vh">
-                <ModalHeader showModalState={()=>{ModificationShow(false); ModificationShowModal(false)}}>
+                <ModalHeader showModalState={()=>{ModificationShow(false, typeRequest); ModificationShowModal(false, typeRequest)}}>
                     <h3>{Icons().FaShoppingCart} Venda de peças</h3>
                 </ModalHeader>
                 <ModalBody className="scroll-style">
@@ -77,14 +79,14 @@ export const ModalCompra = ({typeRequest}) => {
                         }
                     </Select>
                     <Input width="10%" onChange={event => PreencherQtd(event.target.value)} value={qtd} placeholder="Quantidade" />
-                    <ButtonAction onClick={()=>{addProduto()}} bgcolor={Colors().success} color={Colors().white}>{Icons().FaPlus} Adicionar</ButtonAction>
+                    <ButtonAction onClick={()=>{addProduto(typeRequest)}} bgcolor={Colors().success} color={Colors().white}>{Icons().FaPlus} Adicionar</ButtonAction>
                     <DivList>
                         <List className="scroll-style">
                             {
                                 listVenda.map((element) => (
                                     <Li key={`${element.product._id}liVenda`} title={`Nome: ${element.product.name} / Descrição: ${element.product.description}`}>
                                         Código: {element.product.code} - {FormatString(element.product.name,50)}
-                                        <Input placeholder={element.quantity} onBlur={event => modificarQuantidade(event.target.value,element.product._id)}/>
+                                        <Input placeholder={element.quantity} onBlur={event => modificarQuantidade(event.target.value,element.product._id,typeRequest)}/>
                                         Uni. R$ {(parseFloat(element.product.price)).toFixed(2)} - Total R$ {(parseFloat(element.product.price*element.quantity)).toFixed(2)}
                                         <ButtonAction onClick={()=>{removerProduto(element.product._id)}} bgcolor={Colors().danger} color={Colors().white}>{Icons().FaTrashAlt} Exluir</ButtonAction>
                                     </Li>        
@@ -111,7 +113,7 @@ export const ModalCompra = ({typeRequest}) => {
                     </DivList>
                 </ModalBody>
                 <ModalFooter>
-                    <ButtonAction bgcolor={Colors().secondary} onClick={()=>{ModificationShow(false); ModificationShowModal(false)}}>{Icons().FaTimes} Cancelar</ButtonAction>
+                    <ButtonAction bgcolor={Colors().secondary} onClick={()=>{ModificationShow(false, typeRequest); ModificationShowModal(false, typeRequest)}}>{Icons().FaTimes} Cancelar</ButtonAction>
                     {
                         typeRequest === 'servico'?(
                             <ButtonAction disabled={listVenda.length < 1} onClick={()=>{ModificationModalConfirmation('cadastrar'); ModificationShowModal2(true)}} bgcolor={Colors().primary} color={Colors().white} marginLeft="1vh">{Icons().FaSave} Vincular peças</ButtonAction>
@@ -140,8 +142,13 @@ export const ModalCompra = ({typeRequest}) => {
             </ModalContainer>
             {
                 modalConfirmation === 'cadastrar'?(
-                    <ModalConfirmation handleFunction={()=>{salvarDados(typeRequest)}} text={'Efetuar venda! Deseja continuar?'}></ModalConfirmation>
+                    <ModalConfirmation handleFunction={()=>{salvarDados(typeRequest, resultCalback)}} text={'Efetuar venda! Deseja continuar?'}></ModalConfirmation>
                 ):('')   
+            }
+            {
+                modalConfirmation === 'cancelarVin' && vinItem? (
+                    <ModalConfirmationVinProduct handleFunction={()=>{ModificationShow(false, typeRequest, true); ModificationShowModal(false, typeRequest, true)}} text={'Existem produtos não vinculados! Deseja sair sem salvar?'}></ModalConfirmationVinProduct>
+                ):('')
             }
         </>
     )

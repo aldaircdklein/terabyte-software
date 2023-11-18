@@ -30,13 +30,14 @@ import {
 } from './service';
 import {
     useVenda,
-    useServico
+    useServico,
+    useVinProduct
 } from '../../contexts/index';
 import {FolhaNotinha} from '../folha_impressao/index';
 const crypto = require("crypto");
 
 export const useModalCompra = () => {
-    const {onShowModal, setOnShowModal, setOnShowModal2} = useModal();
+    const {onShowModal, setOnShowModal, setOnShowModal2, setOnShowModalVinProduct} = useModal();
     const [show, setShow] = useState(false);
     const [busca, setBusca] = useState('');
     const [listProduto, setListProduto] = useState([]);
@@ -55,6 +56,7 @@ export const useModalCompra = () => {
     const {showLoarding, hiddeLoarding} = useLoarding();
     const [modalConfirmation, setModalConfirmation] = useState('undefined');
     const {telaServico} = useTelasCriar();
+    const {vinItem, setVinItem} = useVinProduct();
 
     const efetuarBusca = async (dado) => {
         try {
@@ -87,6 +89,7 @@ export const useModalCompra = () => {
 
     const generationJSON = (typeRequest) => {
         let newList = listVenda.map((element) => {
+            element.newItem = undefined;
             return {
                 product:element.product._id,
                 quantity:parseInt(element.quantity)
@@ -121,6 +124,7 @@ export const useModalCompra = () => {
                         imprimirNotinha(generationJSON(tipo),result.data._id); 
                     }
                 }
+                setVinItem(false);
             } catch (error) {
                 addAlert(generationError('008-B'));
             }finally{
@@ -148,31 +152,70 @@ export const useModalCompra = () => {
         GerarImpressao(FolhaNotinha(newJson, false));
     }
 
-    const addProduto = () => {
+    const addProduto = (typeRequest) => {
         if(VerificarEstoque({listProduto,selectProduto})){
             addAlert(generationWarning('001-C'));
         }
-        setListVenda(AdicionarProdutoLista({listVenda,listProduto,selectProduto,qtd}));
+        if(typeRequest === "servico") {
+            setVinItem(true);
+        }
+        setListVenda(AdicionarProdutoLista({listVenda,listProduto,selectProduto,qtd,typeRequest}));
+        setQtd(1);
     }
 
-    const modificarQuantidade = (quantidade,id) => {
-        setListVenda(ModificarQuantidadeProduto({listVenda,quantidade,id}));
+    const resetTela = () => {
+        setBusca('');
+        setListProduto(Array.from([]));
+        setSelectProduto({});
+        setQtd(1);
+        setPaid(false);
+        setPaymentType('onCredit');
+        setName('');
+        setDiscount(0);
+        setPartPayment(0);
+        setValidation(false);
+    }
+
+    const modificarQuantidade = (quantidade,id,typeRequest) => {
+        if(typeRequest === "servico") {
+            setVinItem(true);
+        }
+        setListVenda(ModificarQuantidadeProduto({listVenda,quantidade,id,typeRequest}));
     }
 
     const removerProduto = (id) => {
         setListVenda(RemoverProdutoLista({listVenda,id}));
     }
 
-    const ModificationShow = (status) => {
-        setShow(status);
+    const ModificationShow = (status, typeRequest, force) => {
+        if(typeRequest === "servico") {
+            if(listVenda.length > 0 && vinItem && !force){
+                setModalConfirmation("cancelarVin");
+                ModificationModalVinProduct(true);
+                addAlert(generationWarning('005-C'));
+            } else {
+                setShow(status);
+            }
+        }else {
+            setShow(status);
+        }
     }
 
-    const ModificationShowModal = (status) => {
-        setOnShowModal(status);
+    const ModificationShowModal = (status, typeRequest, force) => {
+        if(typeRequest === "servico") {
+            if(!(listVenda.length > 0 && vinItem && !force)){
+                setOnShowModal(status);
+            } 
+        }else {
+            setOnShowModal(status);
+        }
     }
 
     const ModificationShowModal2 = (status) => {
         setOnShowModal2(status);
+    }
+    const ModificationModalVinProduct = (status) => {
+        setOnShowModalVinProduct(status);
     }
     const ModificationModalConfirmation = (status) => {
         setModalConfirmation(status);
@@ -219,27 +262,18 @@ export const useModalCompra = () => {
         
     useEffect(()=>{
         setShow(onShowModal);
+        if(!onShowModal){
+            resetTela();
+        }
     },[onShowModal])
 
     return [
-        salvarDados,
-        efetuarBusca,
-        addProduto,
-        modificarQuantidade,
-        removerProduto,
         show,
-        ModificationShow,
-        ModificationShowModal,
-        ModificationShowModal2,
-        PreencherBusca,
         validation,
         modalConfirmation,
-        ModificationModalConfirmation,
-        PreencherQtd,
         qtd,
         busca,
         listProduto,
-        SelecionarProduto,
         selectProduto,
         listVenda,
         total,
@@ -248,11 +282,24 @@ export const useModalCompra = () => {
         observation,
         discount,
         partPayment,
+        name,
+        vinItem,
+        salvarDados,
+        efetuarBusca,
+        addProduto,
+        modificarQuantidade,
+        removerProduto,
+        ModificationShow,
+        ModificationShowModal,
+        ModificationShowModal2,
+        PreencherBusca,
+        ModificationModalConfirmation,
+        PreencherQtd,
+        SelecionarProduto,
         PreencherPayment,
         PreencherName,
         PreencherObservacao,
         PreencherDesconto,
-        PreencherPartePagamento,
-        name
+        PreencherPartePagamento
     ]
 }

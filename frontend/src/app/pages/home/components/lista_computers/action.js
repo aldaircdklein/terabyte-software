@@ -7,7 +7,10 @@ import {
 } from '../../../../util/contexts/index';
 import {
     ValidationDados,
-    beepAlerta
+    beepAlerta,
+    setStoreNavigation,
+    execStoreNavigation,
+    setLoadStore
 } from '../../../../util/index';
 import {
     generationError,
@@ -34,12 +37,17 @@ export const useListComputer = () => {
     const {setTelaCliente, setTelaComputer, setTelaServico} = useTelasCriar();
     const [validation, setValidation] = useState(false);
     const history = useHistory();
+    const [select, setSelect] = useState(false);
+    const [buscaStore, setBuscaStore] = useState(true);
 
     const Buscar = async (dado) => {
         try {
             if(ValidationDados([busca]) || dado){
                 await showLoarding();
                 const newLista = await ListaComputers(dado? dado:busca);
+                if(!execStoreNavigation()){
+                    setStoreNavigation({busca: dado? dado:busca}, 'Buscar');
+                }
                 setListComputer(newLista);
             }else{
                 setValidation(true);
@@ -56,11 +64,27 @@ export const useListComputer = () => {
         let newDados = DivideDados(dados);
         setCliente(newDados.cliente);
         setComputer(newDados.computador);
+        setSelect(true);
     }
 
     const PreencherBusca = (dados) => {
+        setBuscaStore(false);
         setBusca(dados);
     }
+
+    useEffect(() => {
+        if(execStoreNavigation() && buscaStore){
+            setLoadStore(
+                [{variable: 'busca', value:busca, func:setBusca}],
+                execStoreNavigation().data,
+                () => {
+                    eval(
+                        execStoreNavigation().execFunction
+                    )()
+                }
+            )
+        }
+    }, [busca]);
 
     useEffect(()=>{
         (async ()=>{
@@ -73,20 +97,20 @@ export const useListComputer = () => {
     },[]);
 
     useEffect(()=>{
-        if(cliente._id !== undefined){
+        if(cliente._id !== undefined && select){
             setTelaCliente('atualizar');
             setTelaComputer('atualizar');
             setTelaServico('cadastrar');
             history.push(listRoutes().clienteCreate);
         }
-    },[computer])
+    },[computer, select])
 
     return [
-        Buscar,
-        separarDados,
+        busca,
         validation,
         listComputer,
-        PreencherBusca,
-		busca
+        Buscar,
+        separarDados,
+        PreencherBusca
     ]
 }

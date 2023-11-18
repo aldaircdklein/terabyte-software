@@ -18,7 +18,9 @@ import {
     FaTimes,
     FaBan,
     FaExclamationTriangle,
-    FaCreativeCommonsNc
+    FaCreativeCommonsNc,
+    FaReply,
+    FaBookmark
 } from "react-icons/fa";
 import { FcApproval } from "react-icons/fc";
 
@@ -44,6 +46,8 @@ export const Icons = () => {
         FcApproval:<FcApproval />,
         FaBan:<FaBan />,
         FaExclamationTriangle: <FaExclamationTriangle />,
-        FaCreativeCommonsNc: <FaCreativeCommonsNc />
+        FaCreativeCommonsNc: <FaCreativeCommonsNc />,
+        FaReply: <FaReply/>,
+        FaBookmark: <FaBookmark/>
     }
 }

@@ -8,6 +8,7 @@ export const ModalProvider = ({ children }) => {
     const [onShowModal2, setOnShowModal2] = useState(false);
     const [onShowModal3, setOnShowModal3] = useState(false);
     const [onShowModal4, setOnShowModal4] = useState(false);
+    const [onShowModalVinProduct, setOnShowModalVinProduct] = useState(false);
 
     return (
         <ModalContext.Provider
@@ -22,6 +23,8 @@ export const ModalProvider = ({ children }) => {
                 setOnShowModal3,
                 onShowModal4,
                 setOnShowModal4,
+                onShowModalVinProduct,
+                setOnShowModalVinProduct,
             }}
         >
             {children}
